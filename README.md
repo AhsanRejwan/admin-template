@@ -56,6 +56,16 @@ git clone https://github.com/codedthemes/datta-able-free-react-admin-template.gi
 npm run start
 ```
 
+## Custom App Bootstrap
+
+This repo now includes project-specific documentation for turning the template into your own application.
+
+- Start with [`docs/README.md`](./docs/README.md)
+- Review the visual system in [`docs/style-guide.md`](./docs/style-guide.md)
+- Review the UI inventory in [`docs/component-library.md`](./docs/component-library.md)
+- Follow the implementation rules in [`docs/agent-playbook.md`](./docs/agent-playbook.md)
+- Use [`docs/project-bootstrap.md`](./docs/project-bootstrap.md) for setup and customization
+
 ## Download
 
 - Datta Able Free
