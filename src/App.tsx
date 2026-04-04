@@ -1,12 +1,5 @@
-import { RouterProvider } from 'react-router-dom';
+import TemplateApp from './template/App';
 
-// project-imports
-import router from 'routes';
-
-// ==============================|| APP - THEME, ROUTER, LOCAL ||============================== //
-
-function App() {
-  return <RouterProvider router={router} />;
+export default function App() {
+  return <TemplateApp />;
 }
-
-export default App;
