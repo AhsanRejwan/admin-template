@@ -67,7 +67,7 @@ Important CSS custom properties:
 
 ## Surfaces
 
-The default surface is a white Bootstrap card rendered through [`src/components/MainCard.jsx`](/home/ahsan/Projects/Personal/admin-template/src/components/MainCard.jsx).
+The default surface is a white Bootstrap card rendered through [`src/components/MainCard.jsx`](/home/ahsan/Projects/Personal/admin-template/src/components/MainCard.tsx).
 
 Surface rules:
 
@@ -115,7 +115,7 @@ Core layout dimensions:
 - Collapsed sidebar width: `80px`
 - Expanded-on-hover collapsed width: `300px`
 
-Shell structure from [`src/layout/Dashboard/index.jsx`](/home/ahsan/Projects/Personal/admin-template/src/layout/Dashboard/index.jsx):
+Shell structure from [`src/layout/Dashboard/index.jsx`](/home/ahsan/Projects/Personal/admin-template/src/layout/Dashboard/index.tsx):
 
 - `Drawer`
 - `Header`
@@ -134,7 +134,7 @@ Layout guidance:
 
 ## Navigation
 
-Sidebar navigation is data-driven through [`src/menu-items/index.jsx`](/home/ahsan/Projects/Personal/admin-template/src/menu-items/index.jsx) and rendered through the drawer components in [`src/layout/Dashboard/Drawer`](/home/ahsan/Projects/Personal/admin-template/src/layout/Dashboard/Drawer).
+Sidebar navigation is data-driven through [`src/menu-items/index.jsx`](/home/ahsan/Projects/Personal/admin-template/src/menu-items/index.tsx) and rendered through the drawer components in [`src/layout/Dashboard/Drawer`](/home/ahsan/Projects/Personal/admin-template/src/layout/Dashboard/Drawer).
 
 Navigation conventions:
 

@@ -53,7 +53,7 @@ export default function BarHorizontalChart() {
   const successMain = 'var(--bs-success)';
   const line = 'var(--bs-border-color)';
 
-  const [series] = useState([
+  const [series] = useState<any[]>([
     {
       data: [44, 55, 41, 64, 22, 43, 21]
     },
@@ -62,7 +62,7 @@ export default function BarHorizontalChart() {
     }
   ]);
 
-  const [options, setOptions] = useState(barHorizontalChartOptions);
+  const [options, setOptions] = useState<any>(barHorizontalChartOptions);
 
   useEffect(() => {
     setOptions({

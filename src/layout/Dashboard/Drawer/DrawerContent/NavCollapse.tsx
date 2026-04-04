@@ -13,7 +13,25 @@ import { useGetMenuMaster } from 'api/menu';
 
 // ==============================|| NAVIGATION - COLLAPSE ||============================== //
 
-export default function NavCollapse({ menu, level, parentId, setSelectedItems, selectedItems, setSelectedLevel, selectedLevel }) {
+type NavCollapseProps = {
+  menu?: any;
+  level?: number;
+  parentId?: string;
+  setSelectedItems?: (value: any) => void;
+  selectedItems?: any;
+  setSelectedLevel?: (value: number) => void;
+  selectedLevel?: number;
+};
+
+export default function NavCollapse({
+  menu,
+  level = 0,
+  parentId,
+  setSelectedItems = () => undefined,
+  selectedItems,
+  setSelectedLevel = () => undefined,
+  selectedLevel = 0
+}: NavCollapseProps) {
   const { menuMaster } = useGetMenuMaster();
   const navigation = useNavigate();
   const drawerOpen = menuMaster?.isDashboardDrawerOpened;
@@ -32,7 +50,7 @@ export default function NavCollapse({ menu, level, parentId, setSelectedItems, s
     return false;
   }, []);
 
-  const handleClick = (isRedirect) => {
+  const handleClick = (isRedirect: boolean) => {
     setSelectedLevel(level);
     const willOpen = !open;
     setOpen(willOpen);
@@ -64,7 +82,7 @@ export default function NavCollapse({ menu, level, parentId, setSelectedItems, s
   }, [pathname, menu.id, menu.url]);
 
   const checkOpenForParent = useCallback(
-    (child, id) => {
+    (child: any[], id: string) => {
       child.forEach((item) => {
         if (item.url === pathname) {
           setOpen(true);

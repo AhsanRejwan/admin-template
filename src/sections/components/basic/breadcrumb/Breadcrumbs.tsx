@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -6,7 +7,13 @@ import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
 // ==============================|| COMPONENTS - EXTENDED-CUSTOM-BREADCRUMB ||============================== //
 
-export default function Breadcrumbs({ children, separator = '>', listProps }) {
+type BreadcrumbProps = {
+  children?: ReactNode;
+  separator?: ReactNode;
+  listProps?: Record<string, any>;
+};
+
+export default function Breadcrumbs({ children, separator = '>', listProps }: BreadcrumbProps) {
   const items = React.Children.toArray(children);
   return (
     <Breadcrumb {...listProps}>

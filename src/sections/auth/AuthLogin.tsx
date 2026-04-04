@@ -21,7 +21,17 @@ import DarkLogo from 'assets/images/logo-dark.svg';
 
 // ==============================|| AUTH LOGIN FORM ||============================== //
 
-export default function AuthLoginForm({ className, link }) {
+type AuthLoginFormValues = {
+  email: string;
+  password: string;
+};
+
+type AuthLoginFormProps = {
+  className?: string;
+  link?: string;
+};
+
+export default function AuthLoginForm({ className, link = '#' }: AuthLoginFormProps) {
   const [showPassword, setShowPassword] = useState(false);
 
   const {
@@ -29,7 +39,7 @@ export default function AuthLoginForm({ className, link }) {
     handleSubmit,
     reset,
     formState: { errors }
-  } = useForm();
+  } = useForm<AuthLoginFormValues>();
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
@@ -38,6 +48,8 @@ export default function AuthLoginForm({ className, link }) {
   const onSubmit = () => {
     reset();
   };
+
+  const getErrorMessage = (message: unknown) => (typeof message === 'string' ? message : '');
 
   return (
     <MainCard className="mb-0">
@@ -56,7 +68,7 @@ export default function AuthLoginForm({ className, link }) {
             isInvalid={!!errors.email}
             className={className && 'bg-transparent border-white text-white border-opacity-25 '}
           />
-          <Form.Control.Feedback type="invalid">{errors.email?.message}</Form.Control.Feedback>
+          <Form.Control.Feedback type="invalid">{getErrorMessage(errors.email?.message)}</Form.Control.Feedback>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formPassword">
           <InputGroup>
@@ -70,7 +82,7 @@ export default function AuthLoginForm({ className, link }) {
             <Button onClick={togglePasswordVisibility}>
               {showPassword ? <i className="ti ti-eye" /> : <i className="ti ti-eye-off" />}
             </Button>
-            <Form.Control.Feedback type="invalid">{errors.password?.message}</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">{getErrorMessage(errors.password?.message)}</Form.Control.Feedback>
           </InputGroup>
         </Form.Group>
 

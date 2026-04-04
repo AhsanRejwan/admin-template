@@ -20,15 +20,13 @@ export function useGetMenuMaster() {
     revalidateOnReconnect: false
   });
 
-  const memoizedValue = useMemo(
+  return useMemo(
     () => ({
       menuMaster: data,
       menuMasterLoading: isLoading
     }),
     [data, isLoading]
   );
-
-  return memoizedValue;
 }
 
 export function handlerDrawerOpen(isDashboardDrawerOpened) {

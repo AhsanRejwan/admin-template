@@ -1,3 +1,4 @@
+import type { ReactNode, Ref } from 'react';
 import PropTypes from 'prop-types';
 
 // react-bootstrap
@@ -5,6 +6,20 @@ import Card from 'react-bootstrap/Card';
 import Stack from 'react-bootstrap/Stack';
 
 // ==============================|| MAIN CARD ||============================== //
+
+type MainCardProps = {
+  children?: ReactNode;
+  subheader?: ReactNode;
+  footer?: ReactNode;
+  secondary?: ReactNode;
+  content?: boolean;
+  title?: ReactNode;
+  className?: string;
+  headerClassName?: string;
+  bodyClassName?: string;
+  footerClassName?: string;
+  ref?: Ref<HTMLDivElement>;
+};
 
 export default function MainCard({
   children,
@@ -18,7 +33,7 @@ export default function MainCard({
   bodyClassName,
   footerClassName,
   ref
-}) {
+}: MainCardProps) {
   return (
     <Card ref={ref} className={className}>
       {/* Header Section */}

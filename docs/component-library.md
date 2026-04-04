@@ -4,9 +4,9 @@
 
 ### App And Routing
 
-- App entry: [`src/App.jsx`](/home/ahsan/Projects/Personal/admin-template/src/App.jsx)
-- Router setup: [`src/routes/index.jsx`](/home/ahsan/Projects/Personal/admin-template/src/routes/index.jsx)
-- Default route path constant: [`src/config.js`](/home/ahsan/Projects/Personal/admin-template/src/config.js)
+- App entry: [`src/App.jsx`](/home/ahsan/Projects/Personal/admin-template/src/App.tsx)
+- Router setup: [`src/routes/index.jsx`](/home/ahsan/Projects/Personal/admin-template/src/routes/index.tsx)
+- Default route path constant: [`src/config.js`](/home/ahsan/Projects/Personal/admin-template/src/config.ts)
 
 Primary route families:
 
@@ -22,12 +22,12 @@ Primary route families:
 
 ### Dashboard Layout
 
-- Shell wrapper: [`src/layout/Dashboard/index.jsx`](/home/ahsan/Projects/Personal/admin-template/src/layout/Dashboard/index.jsx)
-- Header: [`src/layout/Dashboard/Header.jsx`](/home/ahsan/Projects/Personal/admin-template/src/layout/Dashboard/Header.jsx)
-- Footer: [`src/layout/Dashboard/Footer.jsx`](/home/ahsan/Projects/Personal/admin-template/src/layout/Dashboard/Footer.jsx)
-- Drawer root: [`src/layout/Dashboard/Drawer/index.jsx`](/home/ahsan/Projects/Personal/admin-template/src/layout/Dashboard/Drawer/index.jsx)
-- Vertical drawer: [`src/layout/Dashboard/Drawer/vertical/VerticalDrawer.jsx`](/home/ahsan/Projects/Personal/admin-template/src/layout/Dashboard/Drawer/vertical/VerticalDrawer.jsx)
-- Drawer logic: [`src/layout/Dashboard/Drawer/common/useDrawerLogic.js`](/home/ahsan/Projects/Personal/admin-template/src/layout/Dashboard/Drawer/common/useDrawerLogic.js)
+- Shell wrapper: [`src/layout/Dashboard/index.jsx`](/home/ahsan/Projects/Personal/admin-template/src/layout/Dashboard/index.tsx)
+- Header: [`src/layout/Dashboard/Header.jsx`](/home/ahsan/Projects/Personal/admin-template/src/layout/Dashboard/Header.tsx)
+- Footer: [`src/layout/Dashboard/Footer.jsx`](/home/ahsan/Projects/Personal/admin-template/src/layout/Dashboard/Footer.tsx)
+- Drawer root: [`src/layout/Dashboard/Drawer/index.jsx`](/home/ahsan/Projects/Personal/admin-template/src/layout/Dashboard/Drawer/index.tsx)
+- Vertical drawer: [`src/layout/Dashboard/Drawer/vertical/VerticalDrawer.jsx`](/home/ahsan/Projects/Personal/admin-template/src/layout/Dashboard/Drawer/vertical/VerticalDrawer.tsx)
+- Drawer logic: [`src/layout/Dashboard/Drawer/common/useDrawerLogic.js`](/home/ahsan/Projects/Personal/admin-template/src/layout/Dashboard/Drawer/common/useDrawerLogic.ts)
 
 Shell UI elements:
 
@@ -43,10 +43,10 @@ Shell UI elements:
 
 ### Navigation Primitives
 
-- Menu source: [`src/menu-items/index.jsx`](/home/ahsan/Projects/Personal/admin-template/src/menu-items/index.jsx)
-- Group renderer: [`src/layout/Dashboard/Drawer/DrawerContent/NavGroup.jsx`](/home/ahsan/Projects/Personal/admin-template/src/layout/Dashboard/Drawer/DrawerContent/NavGroup.jsx)
-- Collapsible node renderer: [`src/layout/Dashboard/Drawer/DrawerContent/NavCollapse.jsx`](/home/ahsan/Projects/Personal/admin-template/src/layout/Dashboard/Drawer/DrawerContent/NavCollapse.jsx)
-- Leaf item renderer: [`src/layout/Dashboard/Drawer/DrawerContent/NavItem.jsx`](/home/ahsan/Projects/Personal/admin-template/src/layout/Dashboard/Drawer/DrawerContent/NavItem.jsx)
+- Menu source: [`src/menu-items/index.jsx`](/home/ahsan/Projects/Personal/admin-template/src/menu-items/index.tsx)
+- Group renderer: [`src/layout/Dashboard/Drawer/DrawerContent/NavGroup.jsx`](/home/ahsan/Projects/Personal/admin-template/src/layout/Dashboard/Drawer/DrawerContent/NavGroup.tsx)
+- Collapsible node renderer: [`src/layout/Dashboard/Drawer/DrawerContent/NavCollapse.jsx`](/home/ahsan/Projects/Personal/admin-template/src/layout/Dashboard/Drawer/DrawerContent/NavCollapse.tsx)
+- Leaf item renderer: [`src/layout/Dashboard/Drawer/DrawerContent/NavItem.jsx`](/home/ahsan/Projects/Personal/admin-template/src/layout/Dashboard/Drawer/DrawerContent/NavItem.tsx)
 
 Navigation item types:
 
@@ -68,13 +68,13 @@ Navigation groups present in the template:
 
 ### Primary Reusable Pieces
 
-- `MainCard`: [`src/components/MainCard.jsx`](/home/ahsan/Projects/Personal/admin-template/src/components/MainCard.jsx)
-- `Breadcrumbs`: [`src/components/Breadcrumbs.jsx`](/home/ahsan/Projects/Personal/admin-template/src/components/Breadcrumbs.jsx)
-- `NavigationScroll`: [`src/components/NavigationScroll.jsx`](/home/ahsan/Projects/Personal/admin-template/src/components/NavigationScroll.jsx)
-- `Loader`: [`src/components/Loader.jsx`](/home/ahsan/Projects/Personal/admin-template/src/components/Loader.jsx)
-- `Loadable`: [`src/components/Loadable.jsx`](/home/ahsan/Projects/Personal/admin-template/src/components/Loadable.jsx)
-- `ReferenceHeader`: [`src/components/ReferenceHeader.jsx`](/home/ahsan/Projects/Personal/admin-template/src/components/ReferenceHeader.jsx)
-- `SimpleBarScroll`: [`src/components/third-party/SimpleBar.jsx`](/home/ahsan/Projects/Personal/admin-template/src/components/third-party/SimpleBar.jsx)
+- `MainCard`: [`src/components/MainCard.jsx`](/home/ahsan/Projects/Personal/admin-template/src/components/MainCard.tsx)
+- `Breadcrumbs`: [`src/components/Breadcrumbs.jsx`](/home/ahsan/Projects/Personal/admin-template/src/components/Breadcrumbs.tsx)
+- `NavigationScroll`: [`src/components/NavigationScroll.jsx`](/home/ahsan/Projects/Personal/admin-template/src/components/NavigationScroll.tsx)
+- `Loader`: [`src/components/Loader.jsx`](/home/ahsan/Projects/Personal/admin-template/src/components/Loader.tsx)
+- `Loadable`: [`src/components/Loadable.jsx`](/home/ahsan/Projects/Personal/admin-template/src/components/Loadable.tsx)
+- `ReferenceHeader`: [`src/components/ReferenceHeader.jsx`](/home/ahsan/Projects/Personal/admin-template/src/components/ReferenceHeader.tsx)
+- `SimpleBarScroll`: [`src/components/third-party/SimpleBar.jsx`](/home/ahsan/Projects/Personal/admin-template/src/components/third-party/SimpleBar.tsx)
 
 What to reuse:
 
@@ -84,13 +84,13 @@ What to reuse:
 
 ### Dashboard Widgets
 
-- Sales performance card: [`src/components/cards/dashboard/SalesPerformanceCard.jsx`](/home/ahsan/Projects/Personal/admin-template/src/components/cards/dashboard/SalesPerformanceCard.jsx)
-- Social stats card: [`src/components/cards/dashboard/SocialStatsCard.jsx`](/home/ahsan/Projects/Personal/admin-template/src/components/cards/dashboard/SocialStatsCard.jsx)
-- Stat indicator card: [`src/components/cards/dashboard/StatIndicatorCard.jsx`](/home/ahsan/Projects/Personal/admin-template/src/components/cards/dashboard/StatIndicatorCard.jsx)
-- Earnings chart: [`src/sections/dashboard/EarningChart.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/dashboard/EarningChart.jsx)
-- Users map: [`src/sections/dashboard/UsersMap.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/dashboard/UsersMap.jsx)
-- Rating card: [`src/sections/dashboard/default/RatingCard.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/dashboard/default/RatingCard.jsx)
-- Recent users card: [`src/sections/dashboard/RecentUsersCard.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/dashboard/RecentUsersCard.jsx)
+- Sales performance card: [`src/components/cards/dashboard/SalesPerformanceCard.jsx`](/home/ahsan/Projects/Personal/admin-template/src/components/cards/dashboard/SalesPerformanceCard.tsx)
+- Social stats card: [`src/components/cards/dashboard/SocialStatsCard.jsx`](/home/ahsan/Projects/Personal/admin-template/src/components/cards/dashboard/SocialStatsCard.tsx)
+- Stat indicator card: [`src/components/cards/dashboard/StatIndicatorCard.jsx`](/home/ahsan/Projects/Personal/admin-template/src/components/cards/dashboard/StatIndicatorCard.tsx)
+- Earnings chart: [`src/sections/dashboard/EarningChart.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/dashboard/EarningChart.tsx)
+- Users map: [`src/sections/dashboard/UsersMap.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/dashboard/UsersMap.tsx)
+- Rating card: [`src/sections/dashboard/default/RatingCard.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/dashboard/default/RatingCard.tsx)
+- Recent users card: [`src/sections/dashboard/RecentUsersCard.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/dashboard/RecentUsersCard.tsx)
 
 Widget patterns:
 
@@ -108,7 +108,7 @@ Widget patterns:
 
 Page file:
 
-- [`src/views/navigation/dashboard/Default.jsx`](/home/ahsan/Projects/Personal/admin-template/src/views/navigation/dashboard/Default.jsx)
+- [`src/views/navigation/dashboard/Default.jsx`](/home/ahsan/Projects/Personal/admin-template/src/views/navigation/dashboard/Default.tsx)
 
 Contained UI elements:
 
@@ -124,7 +124,7 @@ Contained UI elements:
 
 Button page:
 
-- view: [`src/views/components/basic/Button.jsx`](/home/ahsan/Projects/Personal/admin-template/src/views/components/basic/Button.jsx)
+- view: [`src/views/components/basic/Button.jsx`](/home/ahsan/Projects/Personal/admin-template/src/views/components/basic/Button.tsx)
 - sections:
   - default buttons
   - light buttons
@@ -150,7 +150,7 @@ Button page:
 
 Badge page:
 
-- view: [`src/views/components/basic/Badges.jsx`](/home/ahsan/Projects/Personal/admin-template/src/views/components/basic/Badges.jsx)
+- view: [`src/views/components/basic/Badges.jsx`](/home/ahsan/Projects/Personal/admin-template/src/views/components/basic/Badges.tsx)
 - sections:
   - basic badges
   - badge-in-button
@@ -160,7 +160,7 @@ Badge page:
 
 Breadcrumb page:
 
-- view: [`src/views/components/basic/Breadcrumb.jsx`](/home/ahsan/Projects/Personal/admin-template/src/views/components/basic/Breadcrumb.jsx)
+- view: [`src/views/components/basic/Breadcrumb.jsx`](/home/ahsan/Projects/Personal/admin-template/src/views/components/basic/Breadcrumb.tsx)
 - sections from `src/sections/components/basic/breadcrumb/*`:
   - basic breadcrumb
   - icon breadcrumb
@@ -170,7 +170,7 @@ Breadcrumb page:
 
 Collapse page:
 
-- view: [`src/views/components/basic/Collapse.jsx`](/home/ahsan/Projects/Personal/admin-template/src/views/components/basic/Collapse.jsx)
+- view: [`src/views/components/basic/Collapse.jsx`](/home/ahsan/Projects/Personal/admin-template/src/views/components/basic/Collapse.tsx)
 - sections:
   - basic collapse
   - multi-target collapse
@@ -179,7 +179,7 @@ Collapse page:
 
 Tabs and pills page:
 
-- view: [`src/views/components/basic/TabsPills.jsx`](/home/ahsan/Projects/Personal/admin-template/src/views/components/basic/TabsPills.jsx)
+- view: [`src/views/components/basic/TabsPills.jsx`](/home/ahsan/Projects/Personal/admin-template/src/views/components/basic/TabsPills.tsx)
 - sections:
   - standard tabs
   - horizontal pills
@@ -187,7 +187,7 @@ Tabs and pills page:
 
 Typography page:
 
-- view: [`src/views/components/basic/Typography.jsx`](/home/ahsan/Projects/Personal/admin-template/src/views/components/basic/Typography.jsx)
+- view: [`src/views/components/basic/Typography.jsx`](/home/ahsan/Projects/Personal/admin-template/src/views/components/basic/Typography.tsx)
 - sections:
   - heading scale
   - display headings
@@ -203,24 +203,24 @@ Typography page:
 
 Form demo view:
 
-- [`src/views/forms/form-element/FormBasic.jsx`](/home/ahsan/Projects/Personal/admin-template/src/views/forms/form-element/FormBasic.jsx)
+- [`src/views/forms/form-element/FormBasic.jsx`](/home/ahsan/Projects/Personal/admin-template/src/views/forms/form-element/FormBasic.tsx)
 
 Included form modules:
 
-- [`src/sections/components/form-element/FormControls.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/components/form-element/FormControls.jsx)
-- [`src/sections/components/form-element/Sizing.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/components/form-element/Sizing.jsx)
-- [`src/sections/components/form-element/Picker.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/components/form-element/Picker.jsx)
-- [`src/sections/components/form-element/DataList.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/components/form-element/DataList.jsx)
-- [`src/sections/components/form-element/FormControlState.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/components/form-element/FormControlState.jsx)
-- [`src/sections/components/form-element/InlineForm.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/components/form-element/InlineForm.jsx)
-- [`src/sections/components/form-element/FormGrid.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/components/form-element/FormGrid.jsx)
-- [`src/sections/components/form-element/HorizontalForm.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/components/form-element/HorizontalForm.jsx)
-- [`src/sections/components/form-element/ValidationForm.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/components/form-element/ValidationForm.jsx)
-- [`src/sections/components/form-element/SupportedElements.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/components/form-element/SupportedElements.jsx)
-- [`src/sections/components/form-element/Tooltips.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/components/form-element/Tooltips.jsx)
-- [`src/sections/components/form-element/CheckRadio.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/components/form-element/CheckRadio.jsx)
-- [`src/sections/components/form-element/InputGroup.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/components/form-element/InputGroup.jsx)
-- [`src/sections/components/form-element/CustomForms.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/components/form-element/CustomForms.jsx)
+- [`src/sections/components/form-element/FormControls.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/components/form-element/FormControls.tsx)
+- [`src/sections/components/form-element/Sizing.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/components/form-element/Sizing.tsx)
+- [`src/sections/components/form-element/Picker.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/components/form-element/Picker.tsx)
+- [`src/sections/components/form-element/DataList.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/components/form-element/DataList.tsx)
+- [`src/sections/components/form-element/FormControlState.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/components/form-element/FormControlState.tsx)
+- [`src/sections/components/form-element/InlineForm.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/components/form-element/InlineForm.tsx)
+- [`src/sections/components/form-element/FormGrid.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/components/form-element/FormGrid.tsx)
+- [`src/sections/components/form-element/HorizontalForm.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/components/form-element/HorizontalForm.tsx)
+- [`src/sections/components/form-element/ValidationForm.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/components/form-element/ValidationForm.tsx)
+- [`src/sections/components/form-element/SupportedElements.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/components/form-element/SupportedElements.tsx)
+- [`src/sections/components/form-element/Tooltips.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/components/form-element/Tooltips.tsx)
+- [`src/sections/components/form-element/CheckRadio.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/components/form-element/CheckRadio.tsx)
+- [`src/sections/components/form-element/InputGroup.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/components/form-element/InputGroup.tsx)
+- [`src/sections/components/form-element/CustomForms.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/components/form-element/CustomForms.tsx)
 
 Low-level form elements covered by the template:
 
@@ -247,7 +247,7 @@ Low-level form elements covered by the template:
 
 Table demo view:
 
-- [`src/views/table/bootstrap-table/BasicTable.jsx`](/home/ahsan/Projects/Personal/admin-template/src/views/table/bootstrap-table/BasicTable.jsx)
+- [`src/views/table/bootstrap-table/BasicTable.jsx`](/home/ahsan/Projects/Personal/admin-template/src/views/table/bootstrap-table/BasicTable.tsx)
 
 Table variants:
 
@@ -259,17 +259,17 @@ Table variants:
 
 Source files:
 
-- [`src/sections/tables/bootstrap-table/basic-table/BasicTable.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/tables/bootstrap-table/basic-table/BasicTable.jsx)
-- [`src/sections/tables/bootstrap-table/basic-table/HoverTable.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/tables/bootstrap-table/basic-table/HoverTable.jsx)
-- [`src/sections/tables/bootstrap-table/basic-table/DarkTable.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/tables/bootstrap-table/basic-table/DarkTable.jsx)
-- [`src/sections/tables/bootstrap-table/basic-table/StripedTable.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/tables/bootstrap-table/basic-table/StripedTable.jsx)
-- [`src/sections/tables/bootstrap-table/basic-table/ContextualTable.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/tables/bootstrap-table/basic-table/ContextualTable.jsx)
+- [`src/sections/tables/bootstrap-table/basic-table/BasicTable.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/tables/bootstrap-table/basic-table/BasicTable.tsx)
+- [`src/sections/tables/bootstrap-table/basic-table/HoverTable.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/tables/bootstrap-table/basic-table/HoverTable.tsx)
+- [`src/sections/tables/bootstrap-table/basic-table/DarkTable.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/tables/bootstrap-table/basic-table/DarkTable.tsx)
+- [`src/sections/tables/bootstrap-table/basic-table/StripedTable.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/tables/bootstrap-table/basic-table/StripedTable.tsx)
+- [`src/sections/tables/bootstrap-table/basic-table/ContextualTable.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/tables/bootstrap-table/basic-table/ContextualTable.tsx)
 
 ### Charts
 
 Chart view:
 
-- [`src/views/charts/ApexChart.jsx`](/home/ahsan/Projects/Personal/admin-template/src/views/charts/ApexChart.jsx)
+- [`src/views/charts/ApexChart.jsx`](/home/ahsan/Projects/Personal/admin-template/src/views/charts/ApexChart.tsx)
 
 Chart modules:
 
@@ -280,32 +280,32 @@ Chart modules:
 
 Source files:
 
-- [`src/sections/charts/apex-charts/BarChart.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/charts/apex-charts/BarChart.jsx)
-- [`src/sections/charts/apex-charts/BarStackedChart.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/charts/apex-charts/BarStackedChart.jsx)
-- [`src/sections/charts/apex-charts/BarHorizontalChart.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/charts/apex-charts/BarHorizontalChart.jsx)
-- [`src/sections/charts/apex-charts/BarHorizontalStackedChart.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/charts/apex-charts/BarHorizontalStackedChart.jsx)
+- [`src/sections/charts/apex-charts/BarChart.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/charts/apex-charts/BarChart.tsx)
+- [`src/sections/charts/apex-charts/BarStackedChart.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/charts/apex-charts/BarStackedChart.tsx)
+- [`src/sections/charts/apex-charts/BarHorizontalChart.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/charts/apex-charts/BarHorizontalChart.tsx)
+- [`src/sections/charts/apex-charts/BarHorizontalStackedChart.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/charts/apex-charts/BarHorizontalStackedChart.tsx)
 
 ### Maps
 
 Map view:
 
-- [`src/views/maps/GoogleMap.jsx`](/home/ahsan/Projects/Personal/admin-template/src/views/maps/GoogleMap.jsx)
+- [`src/views/maps/GoogleMap.jsx`](/home/ahsan/Projects/Personal/admin-template/src/views/maps/GoogleMap.tsx)
 
 Map module:
 
-- [`src/sections/maps/google-maps/BasicMap.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/maps/google-maps/BasicMap.jsx)
+- [`src/sections/maps/google-maps/BasicMap.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/maps/google-maps/BasicMap.tsx)
 
 ### Authentication
 
 Page shells:
 
-- login page: [`src/views/auth/login/Login.jsx`](/home/ahsan/Projects/Personal/admin-template/src/views/auth/login/Login.jsx)
-- register page: [`src/views/auth/register/Register.jsx`](/home/ahsan/Projects/Personal/admin-template/src/views/auth/register/Register.jsx)
+- login page: [`src/views/auth/login/Login.jsx`](/home/ahsan/Projects/Personal/admin-template/src/views/auth/login/Login.tsx)
+- register page: [`src/views/auth/register/Register.jsx`](/home/ahsan/Projects/Personal/admin-template/src/views/auth/register/Register.tsx)
 
 Form modules:
 
-- login form: [`src/sections/auth/AuthLogin.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/auth/AuthLogin.jsx)
-- register form: [`src/sections/auth/AuthRegister.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/auth/AuthRegister.jsx)
+- login form: [`src/sections/auth/AuthLogin.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/auth/AuthLogin.tsx)
+- register form: [`src/sections/auth/AuthRegister.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/auth/AuthRegister.tsx)
 
 Auth UI elements:
 
@@ -320,7 +320,7 @@ Auth UI elements:
 
 ### Other
 
-- sample content page: [`src/views/SamplePage.jsx`](/home/ahsan/Projects/Personal/admin-template/src/views/SamplePage.jsx)
+- sample content page: [`src/views/SamplePage.jsx`](/home/ahsan/Projects/Personal/admin-template/src/views/SamplePage.tsx)
 - spare route useful for first custom feature scaffolding
 
 ## React-Bootstrap Primitive Inventory
@@ -356,8 +356,8 @@ The following low-level primitives are actively used in the template:
 
 ## State And Behavior Utilities
 
-- SWR-backed menu state: [`src/api/menu.js`](/home/ahsan/Projects/Personal/admin-template/src/api/menu.js)
-- Validation rules used by auth pages: [`src/utils/validationSchema.js`](/home/ahsan/Projects/Personal/admin-template/src/utils/validationSchema.js)
+- SWR-backed menu state: [`src/api/menu.js`](/home/ahsan/Projects/Personal/admin-template/src/api/menu.ts)
+- Validation rules used by auth pages: [`src/utils/validationSchema.js`](/home/ahsan/Projects/Personal/admin-template/src/utils/validationSchema.ts)
 
 Behavior patterns:
 

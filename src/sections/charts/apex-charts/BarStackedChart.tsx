@@ -68,7 +68,7 @@ export default function BarStackedChart() {
 
   const line = 'var(--bs-border-color)';
 
-  const [series] = useState([
+  const [series] = useState<any[]>([
     {
       name: 'PRODUCT A',
       data: [44, 55, 41, 67, 22, 43]
@@ -87,7 +87,7 @@ export default function BarStackedChart() {
     }
   ]);
 
-  const [options, setOptions] = useState(BarStackedChartOptions);
+  const [options, setOptions] = useState<any>(BarStackedChartOptions);
 
   useEffect(() => {
     setOptions({

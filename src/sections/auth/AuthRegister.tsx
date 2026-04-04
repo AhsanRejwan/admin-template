@@ -23,7 +23,20 @@ import DarkLogo from 'assets/images/logo-dark.svg';
 
 // ==============================|| AUTH REGISTER FORM ||============================== //
 
-export default function AuthRegisterForm({ className, link }) {
+type AuthRegisterFormValues = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+};
+
+type AuthRegisterFormProps = {
+  className?: string;
+  link?: string;
+};
+
+export default function AuthRegisterForm({ className, link = '#' }: AuthRegisterFormProps) {
   const [showPassword, setShowPassword] = useState(false);
   const {
     register,
@@ -32,13 +45,13 @@ export default function AuthRegisterForm({ className, link }) {
     formState: { errors },
     setError,
     clearErrors
-  } = useForm();
+  } = useForm<AuthRegisterFormValues>();
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
   };
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: AuthRegisterFormValues) => {
     if (data.password !== data.confirmPassword) {
       setError('confirmPassword', {
         type: 'manual',
@@ -49,6 +62,8 @@ export default function AuthRegisterForm({ className, link }) {
       reset();
     }
   };
+
+  const getErrorMessage = (message: unknown) => (typeof message === 'string' ? message : '');
 
   return (
     <MainCard className="mb-0">
@@ -69,7 +84,7 @@ export default function AuthRegisterForm({ className, link }) {
                 isInvalid={!!errors.firstName}
                 className={className && 'bg-transparent border-white text-white border-opacity-25 '}
               />
-              <Form.Control.Feedback type="invalid">{errors.firstName?.message}</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">{getErrorMessage(errors.firstName?.message)}</Form.Control.Feedback>
             </Form.Group>
           </Col>
           <Col sm={6}>
@@ -81,7 +96,7 @@ export default function AuthRegisterForm({ className, link }) {
                 isInvalid={!!errors.email}
                 className={className && 'bg-transparent border-white text-white border-opacity-25 '}
               />
-              <Form.Control.Feedback type="invalid">{errors.lastName?.message}</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">{getErrorMessage(errors.lastName?.message)}</Form.Control.Feedback>
             </Form.Group>
           </Col>
         </Row>
@@ -93,7 +108,7 @@ export default function AuthRegisterForm({ className, link }) {
             isInvalid={!!errors.email}
             className={className && 'bg-transparent border-white text-white border-opacity-25 '}
           />
-          <Form.Control.Feedback type="invalid">{errors.email?.message}</Form.Control.Feedback>
+          <Form.Control.Feedback type="invalid">{getErrorMessage(errors.email?.message)}</Form.Control.Feedback>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formPassword">
           <InputGroup>
@@ -107,7 +122,7 @@ export default function AuthRegisterForm({ className, link }) {
             <Button onClick={togglePasswordVisibility}>
               {showPassword ? <i className="ti ti-eye" /> : <i className="ti ti-eye-off" />}
             </Button>
-            <Form.Control.Feedback type="invalid">{errors.password?.message}</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">{getErrorMessage(errors.password?.message)}</Form.Control.Feedback>
           </InputGroup>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formConfirmPassword">
@@ -118,7 +133,7 @@ export default function AuthRegisterForm({ className, link }) {
             isInvalid={!!errors.confirmPassword}
             className={className && 'bg-transparent border-white text-white border-opacity-25 '}
           />
-          <Form.Control.Feedback type="invalid">{errors.confirmPassword?.message}</Form.Control.Feedback>
+          <Form.Control.Feedback type="invalid">{getErrorMessage(errors.confirmPassword?.message)}</Form.Control.Feedback>
         </Form.Group>
         <Stack direction="horizontal" className="mt-1 justify-content-between">
           <Form.Group controlId="customCheckc1">

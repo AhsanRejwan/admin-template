@@ -11,34 +11,21 @@ import menuItems from 'menu-items';
 
 // ==============================|| DRAWER CONTENT ||============================== //
 
-export default function Navigation({ selectedItems, setSelectedItems, setSelectTab }) {
+type NavigationProps = {
+  selectedItems?: any;
+  setSelectedItems?: ((value: any) => void) | any;
+  setSelectTab?: ((value: any) => void) | any;
+};
+
+export default function Navigation({ selectedItems, setSelectedItems, setSelectTab }: NavigationProps) {
+  const items = (menuItems.items as any[]) ?? [];
   const [selectedID, setSelectedID] = useState('');
   const [selectedLevel, setSelectedLevel] = useState(0);
 
-  const lastItem = null;
-  let lastItemIndex = menuItems.items.length - 1;
-  let remItems = [];
-  let lastItemId;
-
-  if (lastItem && lastItem < menuItems.items.length) {
-    lastItemId = menuItems.items[lastItem - 1].id;
-    lastItemIndex = lastItem - 1;
-    remItems = menuItems.items.slice(lastItem - 1, menuItems.items.length).map((item) => ({
-      id: item.id,
-      type: item.type,
-      title: item.title,
-      elements: item.children,
-      icon: item.icon,
-      ...(item.url && {
-        url: item.url
-      })
-    }));
-  }
-
-  const navGroups = menuItems.items.slice(0, lastItemIndex + 1).map((item) => {
+  const navGroups = items.map((item) => {
     switch (item.type) {
       case 'group':
-        if (item.url && item.id !== lastItemId) {
+        if (item.url) {
           return (
             <ListGroup.Item key={item.id}>
               <NavItem item={item} level={1} isParents />
@@ -55,9 +42,6 @@ export default function Navigation({ selectedItems, setSelectedItems, setSelectT
             selectedLevel={selectedLevel}
             selectedID={selectedID}
             selectedItems={selectedItems}
-            lastItem={lastItem}
-            remItems={remItems}
-            lastItemId={lastItemId}
             item={item}
             setSelectTab={setSelectTab ?? (() => {})}
           />

@@ -12,14 +12,20 @@ import navigation from 'menu-items';
 
 // ==============================|| MAIN BREADCRUMB ||============================== //
 
+type BreadcrumbState = {
+  type?: string;
+  title?: string;
+  breadcrumbs?: boolean;
+};
+
 export default function Breadcrumbs() {
   const location = useLocation();
 
-  const [main, setMain] = useState({});
-  const [item, setItem] = useState({});
+  const [main, setMain] = useState<BreadcrumbState>({});
+  const [item, setItem] = useState<BreadcrumbState>({});
 
   const getCollapse = useCallback(
-    (item) => {
+    (item: any) => {
       if (item.children) {
         item.children.forEach((collapse) => {
           if (collapse.type === 'collapse') {
@@ -44,7 +50,7 @@ export default function Breadcrumbs() {
   );
 
   useEffect(() => {
-    navigation.items.forEach((navItem) => {
+    (navigation.items as any[]).forEach((navItem) => {
       if (navItem.type === 'group') {
         getCollapse(navItem);
       }
@@ -56,7 +62,7 @@ export default function Breadcrumbs() {
   let breadcrumbContent;
   let title = '';
 
-  if (main?.type === 'collapse') {
+  if (main.type === 'collapse') {
     mainContent = (
       <Breadcrumb.Item href="#" className="text-capitalize">
         {main.title}
@@ -64,7 +70,7 @@ export default function Breadcrumbs() {
     );
   }
 
-  if (item?.type === 'item') {
+  if (item.type === 'item') {
     title = item.title ?? '';
     itemContent = (
       <Breadcrumb.Item href="#" className="text-capitalize">

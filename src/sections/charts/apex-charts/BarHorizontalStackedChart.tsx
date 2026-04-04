@@ -58,7 +58,7 @@ export default function BarHorizontalStackedChart() {
 
   const line = 'var(--bs-border-color)';
 
-  const [series] = useState([
+  const [series] = useState<any[]>([
     {
       name: 'Marine Sprite',
       data: [44, 55, 41, 37, 22, 43, 21]
@@ -81,7 +81,7 @@ export default function BarHorizontalStackedChart() {
     }
   ]);
 
-  const [options, setOptions] = useState(barHorizontalStckedChartOptions);
+  const [options, setOptions] = useState<any>(barHorizontalStckedChartOptions);
 
   useEffect(() => {
     setOptions({

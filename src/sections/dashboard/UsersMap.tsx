@@ -10,7 +10,11 @@ import MainCard from 'components/MainCard';
 
 // =============================|| DEFAULT - USERS MAP ||============================== //
 
-export default function UsersMap({ height }) {
+type UsersMapProps = {
+  height?: number;
+};
+
+export default function UsersMap({ height }: UsersMapProps) {
   const mapRef = useRef(null);
   const [mapHeight, setMapHeight] = useState(height ?? 450);
   const [isMobile, setIsMobile] = useState(false);

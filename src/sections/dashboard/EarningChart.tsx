@@ -70,9 +70,9 @@ const earningChartOptions = {
 // =============================|| DEFAULT - EARNING CHART ||============================== //
 
 export default function EarningChart() {
-  const [series] = useState([{ name: 'Market Days ', data: [10, 60, 45, 72, 45, 86], color: '#fff' }]);
+  const [series] = useState<any[]>([{ name: 'Market Days ', data: [10, 60, 45, 72, 45, 86], color: '#fff' }]);
 
-  const [options, setOptions] = useState(earningChartOptions);
+  const [options, setOptions] = useState<any>(earningChartOptions);
 
   useEffect(() => {
     setOptions({

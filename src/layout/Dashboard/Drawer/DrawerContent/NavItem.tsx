@@ -6,7 +6,13 @@ import { handlerDrawerOpen } from 'api/menu';
 
 // ==============================|| NAVIGATION - ITEM ||============================== //
 
-export default function NavItem({ item }) {
+type NavItemProps = {
+  item?: any;
+  level?: number;
+  isParents?: boolean;
+};
+
+export default function NavItem({ item }: NavItemProps) {
   const { pathname } = useLocation();
 
   const itemPath = item?.link || item?.url;

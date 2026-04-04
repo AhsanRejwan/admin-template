@@ -1,9 +1,11 @@
-import { defineConfig, loadEnv } from "vite";
-import react from "@vitejs/plugin-react";
-import jsconfigPaths from "vite-jsconfig-paths";
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import react from '@vitejs/plugin-react';
+import { defineConfig, loadEnv } from 'vite';
+import tsconfigPaths from 'vite-tsconfig-paths';
 
-import path from "path";
-const resolvePath = (str) => path.resolve(__dirname, str);
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const resolvePath = (filePath: string) => path.resolve(__dirname, filePath);
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
@@ -58,17 +60,17 @@ export default defineConfig(({ mode }) => {
       postcss: {
         plugins: [
           {
-            postcssPlugin: "internal:charset-removal",
+            postcssPlugin: 'internal:charset-removal',
             AtRule: {
               charset: (atRule) => {
-                if (atRule.name === "charset") {
+                if (atRule.name === 'charset') {
                   atRule.remove();
                 }
-              },
-            },
+              }
+            }
           },
-        ],
-      },
+        ]
+      }
     },
     build: {
       chunkSizeWarningLimit: 1600,
@@ -76,12 +78,12 @@ export default defineConfig(({ mode }) => {
       cssCodeSplit: true,
       rollupOptions: {
         input: {
-          main: resolvePath("index.html"),
-          legacy: resolvePath("index.html"),
-        },
-      },
+          main: resolvePath('index.html'),
+          legacy: resolvePath('index.html')
+        }
+      }
     },
     base: API_URL,
-    plugins: [react(), jsconfigPaths()],
+    plugins: [react(), tsconfigPaths()]
   };
 });

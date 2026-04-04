@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
+import { Fragment, useCallback, useEffect, useMemo } from 'react';
 import { matchPath, useLocation } from 'react-router-dom';
 
 // project-imports
@@ -7,30 +7,31 @@ import NavCollapse from './NavCollapse';
 
 // ==============================|| NAVIGATION - GROUP ||============================== //
 
-export default function NavGroup(props) {
-  const { item, lastItem, remItems, lastItemId, setSelectedID, setSelectedItems, selectedItems, setSelectedLevel, selectedLevel } = props;
+type NavGroupProps = {
+  item: any;
+  selectedID?: string;
+  setSelectedID?: (value: string) => void;
+  setSelectedItems?: (value: any) => void;
+  selectedItems?: any;
+  setSelectedLevel?: (value: number) => void;
+  selectedLevel?: number;
+  setSelectTab?: (value: any) => void;
+};
+
+export default function NavGroup(props: NavGroupProps) {
+  const { item, setSelectedID, setSelectedItems, selectedItems, setSelectedLevel, selectedLevel } = props;
 
   const { pathname } = useLocation();
-  const [currentItem, setCurrentItem] = useState(item);
-
-  //  Combine items if this is the last grouped item
-  useEffect(() => {
-    if (lastItem && item.id === lastItemId) {
-      const children = remItems.flatMap((ele) => ele.children ?? []);
-      setCurrentItem({ ...item, children });
-    } else {
-      setCurrentItem(item);
-    }
-  }, [item, lastItem, lastItemId, remItems]);
+  const currentItem = item;
 
   //  Helper: Recursively check if route matches
   const findMatchingChild = useCallback(
-    (children, parentId) => {
+    (children: any[], parentId: string) => {
       children.forEach((child) => {
         if (child.children?.length) findMatchingChild(child.children, parentId);
         const path = child.link || child.url;
         if (path && matchPath({ path, end: true }, pathname)) {
-          setSelectedID(parentId);
+          setSelectedID?.(parentId);
         }
       });
     },
@@ -44,7 +45,7 @@ export default function NavGroup(props) {
       if (child.children?.length) findMatchingChild(child.children, currentItem.id);
       const path = child.link || child.url;
       if (path && matchPath({ path, end: true }, pathname)) {
-        setSelectedID(currentItem.id);
+        setSelectedID?.(currentItem.id);
       }
     });
   }, [pathname, currentItem, findMatchingChild, setSelectedID]);

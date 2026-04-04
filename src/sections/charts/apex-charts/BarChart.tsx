@@ -55,7 +55,7 @@ export default function ApexColumnChart() {
   const primaryMain = 'var(--bs-primary)';
   const successMain = 'var(--bs-success)';
 
-  const [series] = useState([
+  const [series] = useState<any[]>([
     {
       name: 'Net Profit',
       data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
@@ -70,7 +70,7 @@ export default function ApexColumnChart() {
     }
   ]);
 
-  const [options, setOptions] = useState(columnChartOptions);
+  const [options, setOptions] = useState<any>(columnChartOptions);
 
   useEffect(() => {
     setOptions({

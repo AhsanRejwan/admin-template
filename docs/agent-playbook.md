@@ -53,9 +53,9 @@ Use:
 
 Pattern sources:
 
-- [`src/sections/auth/AuthLogin.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/auth/AuthLogin.jsx)
-- [`src/sections/auth/AuthRegister.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/auth/AuthRegister.jsx)
-- [`src/views/forms/form-element/FormBasic.jsx`](/home/ahsan/Projects/Personal/admin-template/src/views/forms/form-element/FormBasic.jsx)
+- [`src/sections/auth/AuthLogin.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/auth/AuthLogin.tsx)
+- [`src/sections/auth/AuthRegister.jsx`](/home/ahsan/Projects/Personal/admin-template/src/sections/auth/AuthRegister.tsx)
+- [`src/views/forms/form-element/FormBasic.jsx`](/home/ahsan/Projects/Personal/admin-template/src/views/forms/form-element/FormBasic.tsx)
 
 ### Dashboard Or Analytics Screen
 
@@ -69,7 +69,7 @@ Use:
 
 Pattern source:
 
-- [`src/views/navigation/dashboard/Default.jsx`](/home/ahsan/Projects/Personal/admin-template/src/views/navigation/dashboard/Default.jsx)
+- [`src/views/navigation/dashboard/Default.jsx`](/home/ahsan/Projects/Personal/admin-template/src/views/navigation/dashboard/Default.tsx)
 
 ### Detail Page
 

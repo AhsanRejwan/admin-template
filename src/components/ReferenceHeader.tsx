@@ -6,7 +6,12 @@ import Row from 'react-bootstrap/Row';
 
 // ==============================|| COMPONENTS - REFERENCE HEADER ||============================== //
 
-export default function ReferenceHeader({ caption, link }) {
+type ReferenceHeaderProps = {
+  caption?: string;
+  link?: string;
+};
+
+export default function ReferenceHeader({ caption, link }: ReferenceHeaderProps) {
   return (
     <Row>
       <Col className="mb-4">

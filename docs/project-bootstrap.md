@@ -70,7 +70,7 @@ The template is configured to run under:
 /demos/admin-templates/datta-able/react/free
 ```
 
-This is set through `VITE_APP_BASE_NAME` and consumed in [`vite.config.mjs`](/home/ahsan/Projects/Personal/admin-template/vite.config.mjs) and [`src/routes/index.jsx`](/home/ahsan/Projects/Personal/admin-template/src/routes/index.jsx).
+This is set through `VITE_APP_BASE_NAME` and consumed in [`vite.config.ts`](/home/ahsan/Projects/Personal/admin-template/vite.config.ts) and [`src/routes/index.jsx`](/home/ahsan/Projects/Personal/admin-template/src/routes/index.tsx).
 
 If you are building your own application locally at the root path, set:
 
