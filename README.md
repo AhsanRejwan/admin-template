@@ -26,8 +26,7 @@ npm run typecheck
 - `src/App.tsx`: thin app entry that currently delegates to the template app
 - `src/index.tsx`: root entry that currently imports template styles
 - `src/template`: namespaced template source library and reference area
-- `docs/agent-guide.md`: coding workflow and extraction rules
-- `docs/ui-inventory.md`: map of template files worth copying from
+- `docs/template-ui-library-index.md`: source-only index of the template UI surface for future reuse
 
 ## Working Rule
 
