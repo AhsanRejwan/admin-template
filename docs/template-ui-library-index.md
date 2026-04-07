@@ -1,6 +1,18 @@
 # Template UI Library Index
 
-This file indexes the live UI surface under `src/template` so future agents can treat the template as a UI library and nothing more.
+This file indexes the live UI surface under `src/template` so future agents can treat the template as a fallback UI source library and nothing more.
+
+## Required Workflow
+
+Follow this order whenever building a feature:
+
+1. Check `src/UI` first for an existing app-owned component.
+2. Reuse or extend the `src/UI` component if it exists.
+3. Only if the needed component is missing from `src/UI`, use this document to find the closest match under `src/template`.
+4. Extract the minimum required code from `src/template` into `src/UI` before using it in feature code.
+5. Remove demo content, sample data, template route wiring, and unused imports during extraction.
+
+`src/template` is a temporary donor library. The long-term target is a standalone app whose reusable surface lives in `src/UI` and whose template folder can be deleted.
 
 ## Recommendation
 
@@ -14,12 +26,13 @@ Use a repo-local documentation index, not a Codex skill, for this job.
 
 Use this index for:
 
+- locating the closest template source after `src/UI` has already been checked
 - reusable UI primitives
 - dashboard cards and visual sections
 - form, table, chart, map, and auth UI pieces
 - the dashboard shell, sidebar, and header/footer chrome when a feature needs template-like layout
 
-Do not treat these as the UI library surface:
+Do not treat these as the app-owned UI library surface:
 
 - `src/template/routes/*`
 - `src/template/menu-items/*`
@@ -28,6 +41,8 @@ Do not treat these as the UI library surface:
 - the app-level handoff in `src/App.tsx` and `src/index.tsx`
 
 `views/*` are assembly maps. They are useful for seeing how the smaller UI pieces are composed, but they are not the reusable surface by default.
+
+Prefer promoting reusable pieces into `src/UI` instead of importing template assemblies directly into product code.
 
 ## Style Foundation
 
