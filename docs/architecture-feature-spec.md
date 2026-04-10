@@ -14,7 +14,7 @@ This standard governs:
 ## Core Rules
 
 1. Build product code under app-owned folders in `src/`. Do not keep growing `src/template` as a product surface.
-2. Check `src/UI` first before extracting anything from `src/template`.
+2. Check `src/ui` first before extracting anything from `src/template`.
 3. Pages stay thin. Containers own orchestration. Components own rendering.
 4. All server communication goes through Axios-backed REST services and React Query hooks.
 5. Every API endpoint gets its own hook.
@@ -31,7 +31,7 @@ This standard governs:
 ```text
 src/
   assets/
-  UI/
+  ui/
   components/
     <feature>/
   containers/
@@ -93,7 +93,7 @@ Containers own orchestration for a page or a major slice of a page. A container 
 - call service hooks
 - read and update context
 - coordinate UI state, search, pagination, filters, sorting, and submission flow
-- compose feature components and `src/UI` primitives
+- compose feature components and `src/ui` primitives
 - keep transport details out of components
 
 Containers must be organized by major feature or module.
@@ -106,7 +106,7 @@ Components render reusable or feature-local UI. A component should:
 - stay focused on presentation and controlled interactions
 - avoid direct REST calls by default
 - live in feature subfolders when feature-specific
-- move to `src/UI` only when it becomes broadly reusable across features
+- move to `src/ui` only when it becomes broadly reusable across features
 
 Components must be organized by major feature or module.
 
@@ -368,7 +368,7 @@ Required aliases:
 - `@constants/*`
 - `@models/*`
 - `@service/*` mapped to `src/services/*`
-- `@ui/*` mapped to `src/UI/*`
+- `@ui/*` mapped to `src/ui/*`
 - `@assets/*`
 - `@routes/*`
 
@@ -400,9 +400,9 @@ Use PascalCase for components, containers, pages, services, contexts, constants,
 
 This repo still contains a donor template under `src/template`. Feature work must follow the existing extraction workflow:
 
-1. Check `src/UI` first.
+1. Check `src/ui` first.
 2. If the UI already exists there, reuse or extend it.
-3. Only if it does not exist in `src/UI`, inspect `src/template` and [`docs/template-ui-library-index.md`](./template-ui-library-index.md).
+3. Only if it does not exist in `src/ui`, inspect `src/template` and [`docs/template-ui-library-index.md`](./template-ui-library-index.md).
 4. Extract the minimum needed code into app-owned folders.
 5. Remove demo wiring, sample data, and template-only dependencies immediately.
 6. Do not leave new product code coupled to `src/template`.
@@ -412,7 +412,7 @@ This repo still contains a donor template under `src/template`. Feature work mus
 When an agent builds a new feature, the expected order is:
 
 1. Read `README.md`, this document, and the template UI index.
-2. Confirm whether `src/UI` already has the needed reusable building blocks.
+2. Confirm whether `src/ui` already has the needed reusable building blocks.
 3. Define or extend route constants and the top-level router.
 4. Add or update typed models under `src/models/<feature>`.
 5. Add or update URI mappings in `src/services/ServiceLinks.ts`.
@@ -420,7 +420,7 @@ When an agent builds a new feature, the expected order is:
 7. Create query-key factories in `src/hooks/service/query-key`.
 8. Create one React Query hook per API endpoint in `src/hooks/service/<feature>`.
 9. Build the container logic in `src/containers/<feature>`.
-10. Build or extract feature components in `src/components/<feature>` or `src/UI`.
+10. Build or extract feature components in `src/components/<feature>` or `src/ui`.
 11. Add the thin page entry in `src/pages/<feature>`.
 12. Use aliases everywhere.
 13. Keep direct imports from `src/template` out of final feature code unless the task is explicitly mid-extraction.
@@ -431,7 +431,7 @@ A feature is not complete unless it satisfies all of the following:
 
 - page exists under `pages/`
 - orchestration lives in `containers/`
-- UI lives in `components/` or `src/UI`
+- UI lives in `components/` or `src/ui`
 - API access is implemented through Axios-backed React Query hooks
 - query keys exist in `hooks/service/query-key`
 - HTTP URI mappings exist in `services/ServiceLinks.ts`
