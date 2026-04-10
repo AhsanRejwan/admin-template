@@ -1,5 +1,5 @@
 export const serviceLinks = {
-  auth: {
-    token: () => '/v1/auth/token',
-  },
+  authToken: () => '/v1/auth/token',
+  organizations: () => '/v1/organizations',
+  organization: (organizationId: number) => `/v1/organizations/${organizationId}`,
 };

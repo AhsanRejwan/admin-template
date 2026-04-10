@@ -5,5 +5,5 @@ import type { TokenResponse } from '@models/auth/TokenResponse';
 
 export const AuthService = {
   login: (request: TokenRequest) =>
-    httpClient.post<TokenResponse, TokenRequest>(serviceLinks.auth.token(), request, { skipAuth: true }),
+    httpClient.post<TokenResponse, TokenRequest>(serviceLinks.authToken(), request, { skipAuth: true }),
 };

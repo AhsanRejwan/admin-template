@@ -296,19 +296,20 @@ Required service structure:
 `ServiceLinks.ts` rules:
 
 - store relative endpoint paths, not full URLs
-- group links by resource or module
+- keep the object readable and shallow by default
 - keep dynamic segments in small functions
 - do not duplicate URI strings inside service files
+- do not force links into CRUD-shaped naming if that makes the code less readable
+- prefer self-contained endpoint names that make sense on their own, such as plural collection names and singular resource names
+- introduce nested objects only when they materially improve clarity; do not nest by default just to mirror modules or REST verbs
 
 Example:
 
 ```ts
 export const serviceLinks = {
-    dashboards: {
-        list: () => '/dashboards',
-        details: (id: number) => `/dashboards/${id}`,
-        favorite: (id: number) => `/dashboards/${id}/favorite`,
-    },
+    dashboards: () => '/dashboards',
+    dashboard: (id: number) => `/dashboards/${id}`,
+    dashboardFavorite: (id: number) => `/dashboards/${id}/favorite`,
 };
 ```
 
@@ -365,6 +366,16 @@ Recommended split:
 - `services/` contains typed request functions
 - `hooks/service/<feature>/` wraps those functions with React Query
 - `hooks/service/query-key/` provides cache key factories
+
+## Icon Standard
+
+All app-owned icons must use `react-icons` with the Ant Design icon set (`react-icons/ai`). Rules:
+
+- import icons from `react-icons/ai` only; do not use other icon families unless a future decision is recorded here
+- do not use template icon-font classes such as `ti ti-*` in new app-owned code
+- icon components are React components, not font glyphs, so they scale with `size` and inherit `color` or `className` like any inline element
+- use `aria-label` or `aria-hidden` on icon-only buttons for accessibility
+- if a reusable icon wrapper is needed, place it in `src/ui`
 
 ## Form Standard
 

@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { Navigate, createBrowserRouter } from 'react-router-dom';
 
 import { lang } from '@constants/LanguageConstants';
 import { ROUTES } from '@constants/Routes';
@@ -8,7 +8,7 @@ import AuthLayout from '@ui/layouts/AuthLayout';
 import MainLayout from '@ui/layouts/MainLayout';
 import AppHomePage from '@pages/app/AppHomePage';
 import SuperuserAuthPage from '@pages/superuser/SuperuserAuthPage';
-import SuperuserHomePage from '@pages/superuser/SuperuserHomePage';
+import SuperuserOrganizationsPage from '@pages/superuser/SuperuserOrganizationsPage';
 
 const homeSidebarGroups = [
   {
@@ -19,8 +19,8 @@ const homeSidebarGroups = [
 
 const superuserSidebarGroups = [
   {
-    groupLabel: lang.layout.sidebar.groups.primary,
-    items: [{ label: lang.layout.sidebar.items.superuser, to: ROUTES.superuser }],
+    groupLabel: lang.layout.sidebar.groups.superuser,
+    items: [{ label: lang.layout.sidebar.items.organizations, to: ROUTES.superuserOrganizations }],
   },
 ];
 
@@ -39,12 +39,14 @@ const routes = [
     ),
     children: [
       {
-        path: '',
         element: <SuperuserProtectedRoute />,
         children: [
           {
             element: <MainLayout sidebarGroups={superuserSidebarGroups} />,
-            children: [{ index: true, element: <SuperuserHomePage /> }],
+            children: [
+              { index: true, element: <Navigate to={ROUTES.superuserOrganizations} replace /> },
+              { path: 'organizations', element: <SuperuserOrganizationsPage /> },
+            ],
           },
         ],
       },

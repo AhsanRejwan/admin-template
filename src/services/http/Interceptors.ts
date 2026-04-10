@@ -4,6 +4,7 @@ import { clearSuperuserSession, readSuperuserSession } from '@service/auth/Super
 
 type AuthAwareRequestConfig = InternalAxiosRequestConfig & {
   skipAuth?: boolean;
+  clearAuthOnUnauthorized?: boolean;
 };
 
 export const attachInterceptors = (instance: AxiosInstance) => {
@@ -26,7 +27,11 @@ export const attachInterceptors = (instance: AxiosInstance) => {
     async (error: AxiosError<AuthAwareRequestConfig>) => {
       const requestConfig = error.config as AuthAwareRequestConfig | undefined;
 
-      if (error.response?.status === 401 && !requestConfig?.skipAuth) {
+      if (
+        error.response?.status === 401 &&
+        !requestConfig?.skipAuth &&
+        requestConfig?.clearAuthOnUnauthorized !== false
+      ) {
         clearSuperuserSession();
       }
 

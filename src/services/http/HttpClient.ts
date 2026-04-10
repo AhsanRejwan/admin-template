@@ -7,6 +7,7 @@ type ResponseSelector<TResponse, TResult> = (data: TResponse, response: AxiosRes
 export type HttpRequestOptions<TResponse, TResult = TResponse> = AxiosRequestConfig & {
   select?: ResponseSelector<TResponse, TResult>;
   skipAuth?: boolean;
+  clearAuthOnUnauthorized?: boolean;
 };
 
 const resolveResponse = <TResponse, TResult = TResponse>(
