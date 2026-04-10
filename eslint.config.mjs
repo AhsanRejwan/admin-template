@@ -61,5 +61,16 @@ export default [
         ...globals.node
       }
     }
+  },
+  {
+    files: ['src/**/*.{ts,tsx}'],
+    ignores: ['src/template/**'],
+    rules: {
+      'func-style': ['error', 'expression', { allowArrowFunctions: true }],
+      'react/function-component-definition': ['error', {
+        namedComponents: 'arrow-function',
+        unnamedComponents: 'arrow-function'
+      }]
+    }
   }
 ];

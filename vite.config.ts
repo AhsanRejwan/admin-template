@@ -6,6 +6,7 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   const base = env.VITE_APP_BASE_NAME || '/';
   const PORT = 3000;
+  const apiProxyTarget = env.VITE_API_PROXY_TARGET || 'http://localhost:8081';
 
   return {
     server: {
@@ -14,6 +15,12 @@ export default defineConfig(({ mode }) => {
       // this sets a default port to 3000
       port: PORT,
       host: true,
+      proxy: {
+        '/api': {
+          target: apiProxyTarget,
+          changeOrigin: true,
+        },
+      },
     },
     preview: {
       open: true,

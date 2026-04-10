@@ -1,0 +1,108 @@
+.superuser-auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  background:
+    radial-gradient(circle at top right, rgba(25, 135, 84, 0.18), transparent 28%),
+    radial-gradient(circle at bottom left, rgba(13, 110, 253, 0.18), transparent 30%),
+    linear-gradient(180deg, #f8fafc 0%, #eef3f8 100%);
+}
+
+.superuser-auth-shell {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  overflow: hidden;
+}
+
+.superuser-auth-panel {
+  position: relative;
+  z-index: 1;
+}
+
+.superuser-auth-panel .card {
+  width: min(100%, 360px);
+  border: 0;
+  border-radius: 24px;
+  box-shadow: 0 32px 80px rgba(15, 23, 42, 0.16);
+}
+
+.superuser-auth-panel .card-body {
+  padding: 40px;
+}
+
+.superuser-auth-backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.superuser-auth-orb {
+  position: absolute;
+  border-radius: 999px;
+  animation: superuser-auth-float 8s linear infinite;
+}
+
+.superuser-auth-orb-primary {
+  top: -96px;
+  right: -88px;
+  width: 240px;
+  height: 240px;
+  background: rgba(13, 110, 253, 0.18);
+}
+
+.superuser-auth-orb-secondary {
+  bottom: -128px;
+  left: -96px;
+  width: 280px;
+  height: 280px;
+  background: rgba(25, 135, 84, 0.16);
+  animation-duration: 10s;
+}
+
+.superuser-auth-orb-accent {
+  top: 112px;
+  right: -24px;
+  width: 20px;
+  height: 20px;
+  background: rgba(13, 202, 240, 0.85);
+  animation-duration: 6s;
+}
+
+.superuser-auth-orb-accent-alt {
+  bottom: 120px;
+  left: -20px;
+  width: 18px;
+  height: 18px;
+  background: rgba(255, 193, 7, 0.9);
+  animation-duration: 7s;
+}
+
+.superuser-password-toggle {
+  min-width: 84px;
+}
+
+@keyframes superuser-auth-float {
+  from {
+    transform: rotate(0deg) translateX(10px) rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg) translateX(10px) rotate(-360deg);
+  }
+}
+
+@media (max-width: 575.98px) {
+  .superuser-auth-shell {
+    padding: 16px;
+  }
+
+  .superuser-auth-panel .card-body {
+    padding: 24px;
+  }
+}

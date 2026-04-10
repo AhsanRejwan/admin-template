@@ -9,6 +9,7 @@ This standard governs:
 - REST service and React Query conventions
 - query-key structure
 - forms, routing, aliases, and model organization
+- engineering principles and React coding conventions
 - the required build workflow for new features
 
 ## Core Rules
@@ -25,6 +26,19 @@ This standard governs:
 10. All TypeScript file names must use PascalCase.
 11. Hooks are the only file-name exception and must use lowercase `use...` naming.
 12. New feature work must fit the folder structure below unless there is a strong repo-wide reason to evolve the standard.
+
+## Engineering Principles
+
+All app-owned feature work must follow these principles:
+
+- SOLID: keep modules narrowly scoped, depend on abstractions where it materially improves change safety, and avoid components or services with mixed responsibilities
+- DRY: centralize repeated endpoint paths, storage keys, mapping logic, and shared UI primitives, but do not create abstractions before duplication is real
+- KISS: prefer small components, predictable data flow, and direct code over clever indirection
+- YAGNI: do not add speculative hooks, providers, abstractions, or route layers before an active requirement exists
+- functional React only: app-owned React modules must stay function-based; do not introduce class-based components or lifecycle-driven state containers
+- arrow-function default: components, hooks, containers, layouts, contexts, and local React helpers should default to `const x = () => {}` declarations and use `function` only for a documented technical reason
+
+These principles apply to implementation and structure. When they conflict, prefer the simplest design that preserves correctness and future change safety.
 
 ## Target Source Layout
 
@@ -396,6 +410,32 @@ import {ROUTES} from '@constants/Routes';
 
 Use PascalCase for components, containers, pages, services, contexts, constants, and model files. Use camelCase for hooks and exported query-key objects.
 
+## React Component And Function Standard
+
+All app-owned React code must use function components. Do not introduce class-based React components.
+
+Required conventions:
+
+- components, pages, containers, layouts, contexts, and hooks should use arrow-function declarations such as `const DashboardPage = () => {}`
+- prefer arrow functions for local helpers in React modules to keep style consistent
+- use `function` declarations only when there is a clear technical reason, such as a library contract or a hoisting requirement that materially simplifies the code
+- class-based React components are prohibited in app-owned code
+- keep React modules declarative and avoid mixing rendering, transport, and persistence responsibilities
+- extracted app-owned React modules must not keep importing template-owned stylesheets, icon-font bundles, or other donor-only presentation assets
+
+`src/template` is a donor area, not the architectural reference for new product code. Validate extracted code against this standard when it moves into app-owned folders.
+
+## Validation Checklist
+
+Every feature review and completion pass must validate the following:
+
+- `npm run lint`
+- `npm run typecheck`
+- `npm run build`
+- no app-owned React module introduces a class-based component
+- no app-owned React module uses `function` declarations for components, hooks, containers, layouts, or contexts unless the exception is clearly justified in code review
+- the final structure still satisfies SOLID, DRY, KISS, and YAGNI rather than adding speculative abstractions
+
 ## Template Extraction Rule
 
 This repo still contains a donor template under `src/template`. Feature work must follow the existing extraction workflow:
@@ -404,8 +444,9 @@ This repo still contains a donor template under `src/template`. Feature work mus
 2. If the UI already exists there, reuse or extend it.
 3. Only if it does not exist in `src/ui`, inspect `src/template` and [`docs/template-ui-library-index.md`](./template-ui-library-index.md).
 4. Extract the minimum needed code into app-owned folders.
-5. Remove demo wiring, sample data, and template-only dependencies immediately.
-6. Do not leave new product code coupled to `src/template`.
+5. Port the required styles, icons, and supporting assets into app-owned files as part of the same change.
+6. Remove demo wiring, sample data, and template-only dependencies immediately.
+7. Do not leave new product code coupled to `src/template`.
 
 ## Agentic Feature Delivery Workflow
 
@@ -423,7 +464,8 @@ When an agent builds a new feature, the expected order is:
 10. Build or extract feature components in `src/components/<feature>` or `src/ui`.
 11. Add the thin page entry in `src/pages/<feature>`.
 12. Use aliases everywhere.
-13. Keep direct imports from `src/template` out of final feature code unless the task is explicitly mid-extraction.
+13. Port any required styling and presentation assets into app-owned files before calling the feature done.
+14. Keep direct imports from `src/template` out of final feature code unless the task is explicitly mid-extraction.
 
 ## Definition Of Done For New Features
 
@@ -439,4 +481,6 @@ A feature is not complete unless it satisfies all of the following:
 - route paths are defined centrally
 - imports use aliases
 - file names follow the naming convention in this document
+- app-owned React modules use arrow-function declarations unless a clear technical exception exists
+- extracted styling and presentation assets are app-owned, not still imported from `src/template`
 - no new product dependency is introduced on `src/template`
