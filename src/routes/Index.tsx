@@ -4,13 +4,16 @@ import { ROUTES } from '@constants/Routes';
 import { SuperuserAuthProvider } from '@contexts/superuser/SuperuserAuthContext';
 import { SuperuserProtectedRoute } from '@routes/SuperuserProtectedRoute';
 import AuthLayout from '@ui/layouts/AuthLayout';
+import MainLayout from '@ui/layouts/MainLayout';
+import AppHomePage from '@pages/app/AppHomePage';
 import SuperuserAuthPage from '@pages/superuser/SuperuserAuthPage';
 import SuperuserHomePage from '@pages/superuser/SuperuserHomePage';
 
 const routes = [
   {
     path: ROUTES.home,
-    element: <div>App</div>,
+    element: <MainLayout sidebarGroups={[{ groupLabel: 'GroupName', items: [{ label: 'Home', to: ROUTES.home }] }]} />,
+    children: [{ index: true, element: <AppHomePage /> }],
   },
   {
     path: ROUTES.superuser,
@@ -23,7 +26,12 @@ const routes = [
       {
         path: '',
         element: <SuperuserProtectedRoute />,
-        children: [{ index: true, element: <SuperuserHomePage /> }],
+        children: [
+          {
+            element: <MainLayout sidebarGroups={[{ groupLabel: 'GroupName', items: [{ label: 'Superuser', to: ROUTES.superuser }] }]} />,
+            children: [{ index: true, element: <SuperuserHomePage /> }],
+          },
+        ],
       },
       {
         path: 'auth',

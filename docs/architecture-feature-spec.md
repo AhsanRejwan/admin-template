@@ -422,6 +422,7 @@ Required conventions:
 - class-based React components are prohibited in app-owned code
 - keep React modules declarative and avoid mixing rendering, transport, and persistence responsibilities
 - extracted app-owned React modules must not keep importing template-owned stylesheets, icon-font bundles, or other donor-only presentation assets
+- CSS must use relative units (`rem` for dimensions, spacing, and typography; `em` for media query breakpoints) unless a pixel value is technically required — for example, `1px` borders or `box-shadow` offsets where sub-pixel rendering demands it; z-index values remain unitless integers
 
 `src/template` is a donor area, not the architectural reference for new product code. Validate extracted code against this standard when it moves into app-owned folders.
 
