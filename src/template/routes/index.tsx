@@ -10,11 +10,9 @@ import TablesRoutes from './TablesRoutes';
 
 // ==============================|| ROUTING RENDER ||============================== //
 
-const router = createBrowserRouter(
-  [NavigationRoutes, ComponentsRoutes, FormsRoutes, TablesRoutes, PagesRoutes, ChartMapRoutes],
-  {
-    basename: import.meta.env.VITE_APP_BASE_NAME
-  }
-);
+const routes = [NavigationRoutes, ComponentsRoutes, FormsRoutes, TablesRoutes, PagesRoutes, ChartMapRoutes];
 
-export default router;
+export const createTemplateRouter = (basename = import.meta.env.VITE_APP_BASE_NAME) =>
+  createBrowserRouter(routes, {
+    basename
+  });
