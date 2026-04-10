@@ -262,6 +262,18 @@ This folder is the single source of truth for React Query cache addressing.
 
 Do not put environment-specific logic or derived state here.
 
+Language constant rules:
+
+- all user-facing display copy must come from `src/constants/LanguageConstants.ts`
+- export a module-scoped `lang` object so references stay stable across renders
+- before adding any new display string, check the existing `lang` hierarchy and reuse an existing value when the meaning already matches
+- if the current `lang` indexing no longer fits the feature cleanly, propose and apply a hierarchy adjustment rather than forcing an inaccurate key path
+- structure language keys by surface and usage, for example `lang.layout.sidebar.items.home` or `lang.superuser.auth.loginForm.actions.submit`
+- if no suitable key exists after that review, add a new nested index in the existing hierarchy instead of introducing an inline string
+- include validation copy, empty states, CTA labels, headings, placeholder text, aria labels, alt text, toast text, and server-error display text in that shared hierarchy
+- do not hardcode display strings inside pages, containers, components, layouts, or contexts
+- if future multi-locale support is required, keep the same key hierarchy and swap locale modules behind the same contract rather than reintroducing inline strings
+
 ### `services/`
 
 `services/` is the raw API layer. It is responsible for:
@@ -435,6 +447,7 @@ Every feature review and completion pass must validate the following:
 - `npm run build`
 - no app-owned React module introduces a class-based component
 - no app-owned React module uses `function` declarations for components, hooks, containers, layouts, or contexts unless the exception is clearly justified in code review
+- no app-owned React module contains hardcoded display strings; user-facing copy must resolve through `lang`
 - the final structure still satisfies SOLID, DRY, KISS, and YAGNI rather than adding speculative abstractions
 
 ## Template Extraction Rule
@@ -483,5 +496,6 @@ A feature is not complete unless it satisfies all of the following:
 - imports use aliases
 - file names follow the naming convention in this document
 - app-owned React modules use arrow-function declarations unless a clear technical exception exists
+- user-facing copy is sourced from `src/constants/LanguageConstants.ts` rather than inline string literals
 - extracted styling and presentation assets are app-owned, not still imported from `src/template`
 - no new product dependency is introduced on `src/template`

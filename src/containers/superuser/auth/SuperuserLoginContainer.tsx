@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { isAxiosError } from 'axios';
 
+import { lang } from '@constants/LanguageConstants';
 import { ROUTES } from '@constants/Routes';
 import { useSuperuserAuth } from '@contexts/superuser/SuperuserAuthContext';
 import { useLogin } from '@hooks/service/auth/useLogin';
@@ -26,10 +27,10 @@ export const SuperuserLoginContainer = () => {
     if (!error) return undefined;
 
     if (isAxiosError(error) && error.response?.status === 401) {
-      return 'Invalid credentials. Please check your username and password.';
+      return lang.superuser.auth.loginForm.errors.invalidCredentials;
     }
 
-    return 'Something went wrong. Please try again.';
+    return lang.superuser.auth.loginForm.errors.generic;
   };
 
   return (

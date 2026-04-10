@@ -4,6 +4,7 @@ import { Link, NavLink, Outlet } from 'react-router-dom';
 import Loader from '@ui/Loader';
 import logo from '@assets/images/placeholder-image.svg';
 import '@assets/styles/MainLayout.css';
+import { lang } from '@constants/LanguageConstants';
 
 interface SidebarItem {
   label: string;
@@ -24,8 +25,8 @@ const MainLayout = ({ sidebarGroups }: MainLayoutProps) => (
     <nav className="main-sidebar">
       <div className="main-sidebar-header">
         <Link to="/" className="main-sidebar-brand">
-          <img src={logo} alt="CoPerform logo" className="main-sidebar-brand-logo" />
-          <span className="main-sidebar-brand-title">Coperform</span>
+          <img src={logo} alt={lang.app.brand.logoAlt} className="main-sidebar-brand-logo" />
+          <span className="main-sidebar-brand-title">{lang.app.brand.name}</span>
         </Link>
       </div>
       <div className="main-sidebar-content">
