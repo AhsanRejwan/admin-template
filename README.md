@@ -31,6 +31,7 @@ npm run typecheck
 - `src/index.tsx`: root entry that currently imports template styles
 - `src/UI`: app-owned reusable components extracted from the template and evolved locally
 - `src/template`: namespaced template source library and reference area
+- `docs/architecture-feature-spec.md`: required architecture and agentic feature-delivery standard for future work
 - `docs/template-ui-library-index.md`: source-only index of the template UI surface for future reuse
 
 ## Working Rule
@@ -56,4 +57,5 @@ When a feature needs UI:
 
 - `VITE_APP_BASE_NAME` defaults to `/`
 - `VITE_APP_GOOGLE_MAPS_API_KEY` can remain empty until map features are actually adopted
+- future feature work should follow `docs/architecture-feature-spec.md` in addition to the template extraction rules in this README
 - update the docs whenever routing, styling, or shared components move out of `src/template` and into `src/UI` or other app-owned folders
