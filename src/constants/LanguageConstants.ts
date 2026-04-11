@@ -96,8 +96,10 @@ export const lang = deepFreeze({
         actionsMenu: {
           toggle: 'Row actions',
           edit: 'Edit',
+          editHierarchy: 'Edit Hierarchy',
           delete: 'Delete',
           editAriaLabel: 'Edit organization',
+          editHierarchyAriaLabel: 'Edit organization hierarchy',
           deleteAriaLabel: 'Delete organization',
         },
       },

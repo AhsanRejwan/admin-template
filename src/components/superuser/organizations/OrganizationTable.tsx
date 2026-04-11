@@ -1,10 +1,11 @@
+import { AiOutlineDelete, AiOutlinePartition, AiTwotoneEdit } from 'react-icons/ai';
+
+import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 
 import { lang } from '@constants/LanguageConstants';
 import type { OrganizationSummary } from '@models/organization/OrganizationSummary';
 import InlineStateNotice from '@ui/InlineStateNotice';
-
-import OrganizationActionsDropdown from './OrganizationActionsDropdown';
 
 const l = lang.superuser.organizations.table;
 
@@ -96,10 +97,33 @@ const OrganizationTable = ({
               </small>
             </td>
             <td className="text-end">
-              <OrganizationActionsDropdown
-                onEdit={() => onEdit(org)}
-                onDelete={() => onDelete(org)}
-              />
+              <Button
+                variant="light"
+                size="sm"
+                onClick={(e) => { e.stopPropagation(); onEdit(org); }}
+                aria-label={l.actionsMenu.editAriaLabel}
+                title={l.actionsMenu.edit}
+              >
+                <AiTwotoneEdit />
+              </Button>{' '}
+              <Button
+                variant="light"
+                size="sm"
+                onClick={(e) => e.stopPropagation()}
+                aria-label={l.actionsMenu.editHierarchyAriaLabel}
+                title={l.actionsMenu.editHierarchy}
+              >
+                <AiOutlinePartition />
+              </Button>{' '}
+              <Button
+                variant="outline-danger"
+                size="sm"
+                onClick={(e) => { e.stopPropagation(); onDelete(org); }}
+                aria-label={l.actionsMenu.deleteAriaLabel}
+                title={l.actionsMenu.delete}
+              >
+                <AiOutlineDelete />
+              </Button>
             </td>
           </tr>
         ))}
