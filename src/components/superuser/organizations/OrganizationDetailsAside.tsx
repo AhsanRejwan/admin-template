@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'react';
 import Button from 'react-bootstrap/Button';
-import Spinner from 'react-bootstrap/Spinner';
 
 import { lang } from '@constants/LanguageConstants';
 import type { Organization } from '@models/organization/Organization';
 import { OrganizationStatus } from '@models/organization/OrganizationStatus';
+import InlineStateNotice from '@ui/InlineStateNotice';
 
 const l = lang.superuser.organizations.details;
 
@@ -40,6 +40,8 @@ type OrganizationDetailsAsideProps = {
   organization?: Organization;
   isLoading: boolean;
   isError: boolean;
+  errorMessage?: string;
+  onRetry?: () => void;
   onClose: () => void;
 };
 
@@ -48,6 +50,8 @@ const OrganizationDetailsAside = ({
   organization,
   isLoading,
   isError,
+  errorMessage,
+  onRetry,
   onClose,
 }: OrganizationDetailsAsideProps) => {
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
@@ -109,18 +113,20 @@ const OrganizationDetailsAside = ({
 
         <div className="org-details-aside__body">
           {!organization && !isLoading && !isError && (
-            <p className="text-muted">{l.empty}</p>
+            <InlineStateNotice status="empty" message={l.empty} />
           )}
 
           {isLoading && (
-            <div className="d-flex align-items-center gap-2 text-muted">
-              <Spinner animation="border" size="sm" role="status" />
-              <span>{l.loading}</span>
-            </div>
+            <InlineStateNotice status="loading" message={l.loading} />
           )}
 
           {isError && !isLoading && (
-            <p className="text-danger">{l.error}</p>
+            <InlineStateNotice
+              status="error"
+              message={errorMessage ?? l.error}
+              actionLabel={onRetry ? l.retry : undefined}
+              onAction={onRetry}
+            />
           )}
 
           {organization && !isLoading && !isError && (

@@ -24,7 +24,7 @@ import MainCard from '@ui/MainCard';
 const l = lang.superuser.organizations;
 const PAGE_SIZE = 20;
 
-const toUpdateRequest = (values: OrganizationFormValues): UpdateOrganizationRequest => ({
+const toEditableOrganizationRequest = (values: OrganizationFormValues): UpdateOrganizationRequest => ({
   legalName: values.legalName.trim(),
   displayName: values.displayName.trim(),
   domainUrl: values.domainUrl.trim() || undefined,
@@ -42,16 +42,32 @@ const toUpdateRequest = (values: OrganizationFormValues): UpdateOrganizationRequ
   postalCode: values.postalCode.trim() || undefined,
 });
 
+const toCreateRequest = (values: OrganizationFormValues) => ({
+  slug: values.slug.trim().toLowerCase(),
+  ...toEditableOrganizationRequest(values),
+});
+
+const getQueryErrorMessage = (error: unknown, fallbackMessage: string, forbiddenMessage: string) => {
+  const parsed = parseApiError(error);
+
+  if (parsed.status === 403) {
+    return forbiddenMessage;
+  }
+
+  return parsed.message || fallbackMessage;
+};
+
 const OrganizationManagementContainer = () => {
   const [page, setPage] = useState(0);
 
   // Details aside state
-  const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [selectedOrganizationId, setSelectedOrganizationId] = useState<number | null>(null);
   const [isAsideOpen, setIsAsideOpen] = useState(false);
 
   // Modal state
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
+  const [editingOrganizationId, setEditingOrganizationId] = useState<number | null>(null);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState<OrganizationSummary | null>(null);
   const [deleteServerError, setDeleteServerError] = useState<string | undefined>();
@@ -62,7 +78,8 @@ const OrganizationManagementContainer = () => {
 
   // Data queries
   const listQuery = useGetOrganizations(page, PAGE_SIZE);
-  const detailsQuery = useGetOrganization(selectedId);
+  const selectedOrganizationQuery = useGetOrganization(selectedOrganizationId);
+  const editOrganizationQuery = useGetOrganization(editingOrganizationId);
 
   // Mutations
   const createMutation = useCreateOrganization();
@@ -83,26 +100,44 @@ const OrganizationManagementContainer = () => {
   }, [listQuery.data, page]);
 
   useEffect(() => {
-    if (!listQuery.data || selectedId === null || listQuery.data.page !== page) return;
+    if (!listQuery.data || selectedOrganizationId === null || listQuery.data.page !== page) return;
 
-    const isSelectedOnCurrentPage = listQuery.data.items.some((organization) => organization.id === selectedId);
+    const isSelectedOnCurrentPage = listQuery.data.items.some((organization) => organization.id === selectedOrganizationId);
 
     if (!isSelectedOnCurrentPage) {
-      setSelectedId(null);
+      setSelectedOrganizationId(null);
       setIsAsideOpen(false);
     }
-  }, [listQuery.data, page, selectedId]);
+  }, [listQuery.data, page, selectedOrganizationId]);
+
+  const listErrorMessage = listQuery.isError
+    ? getQueryErrorMessage(listQuery.error, l.table.error, l.table.forbidden)
+    : undefined;
+  const selectedOrganizationErrorMessage = selectedOrganizationQuery.isError
+    ? getQueryErrorMessage(
+        selectedOrganizationQuery.error,
+        l.details.error,
+        l.details.forbidden,
+      )
+    : undefined;
+  const editOrganizationErrorMessage = editOrganizationQuery.isError
+    ? getQueryErrorMessage(
+        editOrganizationQuery.error,
+        l.details.error,
+        l.details.forbidden,
+      )
+    : undefined;
 
   // Row click — open details aside
   const handleRowClick = (org: OrganizationSummary) => {
-    setSelectedId(org.id);
+    setSelectedOrganizationId(org.id);
     setIsAsideOpen(true);
   };
 
   // Edit flow — set selectedId to trigger the details fetch, then open modal.
   // The modal shows a loading state until detailsQuery resolves.
   const handleEditClick = (org: OrganizationSummary) => {
-    setSelectedId(org.id);
+    setEditingOrganizationId(org.id);
     setFormServerError(undefined);
     setFormFieldErrors([]);
     setIsEditOpen(true);
@@ -121,24 +156,7 @@ const OrganizationManagementContainer = () => {
     setFormFieldErrors([]);
 
     createMutation.mutate(
-      {
-        slug: values.slug.trim().toLowerCase(),
-        legalName: values.legalName.trim(),
-        displayName: values.displayName.trim(),
-        domainUrl: values.domainUrl.trim() || undefined,
-        contactEmail: values.contactEmail.trim() || undefined,
-        contactPhone: values.contactPhone.trim() || undefined,
-        website: values.website.trim() || undefined,
-        registrationNumber: values.registrationNumber.trim() || undefined,
-        taxId: values.taxId.trim() || undefined,
-        country: values.country.trim() || undefined,
-        timezone: values.timezone.trim() || undefined,
-        addressLine1: values.addressLine1.trim() || undefined,
-        addressLine2: values.addressLine2.trim() || undefined,
-        city: values.city.trim() || undefined,
-        state: values.state.trim() || undefined,
-        postalCode: values.postalCode.trim() || undefined,
-      },
+      toCreateRequest(values),
       {
         onSuccess: () => {
           setIsCreateOpen(false);
@@ -160,16 +178,17 @@ const OrganizationManagementContainer = () => {
 
   // Edit submit — send full editable snapshot
   const handleEditSubmit = (values: OrganizationFormValues) => {
-    if (!selectedId) return;
+    if (editingOrganizationId === null) return;
 
     setFormServerError(undefined);
     setFormFieldErrors([]);
 
     updateMutation.mutate(
-      { id: selectedId, request: toUpdateRequest(values) },
+      { id: editingOrganizationId, request: toEditableOrganizationRequest(values) },
       {
         onSuccess: () => {
           setIsEditOpen(false);
+          setEditingOrganizationId(null);
         },
         onError: (error) => {
           const parsed = parseApiError(error);
@@ -187,13 +206,14 @@ const OrganizationManagementContainer = () => {
   const handleDeleteConfirm = () => {
     if (!deleteTarget) return;
 
+    setDeleteServerError(undefined);
     deleteMutation.mutate(deleteTarget.id, {
       onSuccess: () => {
         setIsDeleteOpen(false);
         setDeleteServerError(undefined);
-        if (selectedId === deleteTarget.id) {
+        if (selectedOrganizationId === deleteTarget.id) {
           setIsAsideOpen(false);
-          setSelectedId(null);
+          setSelectedOrganizationId(null);
         }
         setDeleteTarget(null);
       },
@@ -215,6 +235,7 @@ const OrganizationManagementContainer = () => {
   const handleCloseEdit = () => {
     if (!updateMutation.isPending) {
       setIsEditOpen(false);
+      setEditingOrganizationId(null);
       setFormServerError(undefined);
       setFormFieldErrors([]);
     }
@@ -244,7 +265,8 @@ const OrganizationManagementContainer = () => {
           organizations={organizations}
           isLoading={listQuery.isLoading}
           isError={listQuery.isError}
-          selectedId={selectedId}
+          errorMessage={listErrorMessage}
+          selectedId={selectedOrganizationId}
           onRowClick={handleRowClick}
           onEdit={handleEditClick}
           onDelete={handleDeleteClick}
@@ -278,10 +300,15 @@ const OrganizationManagementContainer = () => {
 
       <OrganizationDetailsAside
         isOpen={isAsideOpen}
-        organization={detailsQuery.data}
-        isLoading={detailsQuery.isLoading}
-        isError={detailsQuery.isError}
-        onClose={() => setIsAsideOpen(false)}
+        organization={selectedOrganizationQuery.data}
+        isLoading={selectedOrganizationQuery.isLoading}
+        isError={selectedOrganizationQuery.isError}
+        errorMessage={selectedOrganizationErrorMessage}
+        onRetry={() => selectedOrganizationQuery.refetch()}
+        onClose={() => {
+          setIsAsideOpen(false);
+          setSelectedOrganizationId(null);
+        }}
       />
 
       <OrganizationFormModal
@@ -297,12 +324,13 @@ const OrganizationManagementContainer = () => {
       <OrganizationFormModal
         isOpen={isEditOpen}
         mode="edit"
-        organization={detailsQuery.data}
-        isLoadingOrganization={detailsQuery.isLoading}
+        organization={editOrganizationQuery.data}
+        isLoadingOrganization={editOrganizationQuery.isLoading}
         isPending={updateMutation.isPending}
         serverError={formServerError}
         fieldErrors={formFieldErrors}
-        organizationLoadError={detailsQuery.isError ? l.details.error : undefined}
+        organizationLoadError={editOrganizationErrorMessage}
+        onRetryLoadOrganization={() => editOrganizationQuery.refetch()}
         onSubmit={handleEditSubmit}
         onClose={handleCloseEdit}
       />

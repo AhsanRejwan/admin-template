@@ -90,12 +90,15 @@ export const lang = deepFreeze({
         loading: 'Loading organizations…',
         empty: 'No organizations found.',
         error: 'Failed to load organizations.',
+        forbidden: 'You do not have permission to view organizations.',
         retry: 'Retry',
         rowAction: (displayName: string) => `View details for ${displayName}`,
         actionsMenu: {
           toggle: 'Row actions',
           edit: 'Edit',
           delete: 'Delete',
+          editAriaLabel: 'Edit organization',
+          deleteAriaLabel: 'Delete organization',
         },
       },
       createModal: {
@@ -215,7 +218,9 @@ export const lang = deepFreeze({
         closeAriaLabel: 'Close details panel',
         loading: 'Loading details…',
         error: 'Failed to load organization details.',
+        forbidden: 'You do not have permission to view organization details.',
         empty: 'Select an organization to view its details.',
+        retry: 'Retry',
         labels: {
           displayName: 'Display Name',
           legalName: 'Legal Name',

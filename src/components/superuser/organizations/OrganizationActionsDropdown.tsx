@@ -30,10 +30,10 @@ const OrganizationActionsDropdown = ({
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
-        <Dropdown.Item onClick={onEdit}>
+        <Dropdown.Item onClick={onEdit} aria-label={l.editAriaLabel}>
           {l.edit}
         </Dropdown.Item>
-        <Dropdown.Item onClick={onDelete} className="text-danger">
+        <Dropdown.Item onClick={onDelete} className="text-danger" aria-label={l.deleteAriaLabel}>
           {l.delete}
         </Dropdown.Item>
       </Dropdown.Menu>

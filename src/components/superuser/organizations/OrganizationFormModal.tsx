@@ -3,12 +3,12 @@ import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import Spinner from 'react-bootstrap/Spinner';
 import { useForm } from 'react-hook-form';
 
 import { lang } from '@constants/LanguageConstants';
 import type { ApiFieldError } from '@models/common/ApiFieldError';
 import type { Organization } from '@models/organization/Organization';
+import InlineStateNotice from '@ui/InlineStateNotice';
 
 import OrganizationFormFields from './OrganizationFormFields';
 
@@ -55,6 +55,26 @@ const emptyValues: OrganizationFormValues = {
   state: '',
   postalCode: '',
 };
+
+const EDITABLE_FORM_FIELDS: Array<keyof OrganizationFormValues> = [
+  'displayName',
+  'legalName',
+  'domainUrl',
+  'contactEmail',
+  'contactPhone',
+  'website',
+  'registrationNumber',
+  'taxId',
+  'country',
+  'timezone',
+  'addressLine1',
+  'addressLine2',
+  'city',
+  'state',
+  'postalCode',
+];
+
+const normalizeComparableValue = (value: string | null | undefined) => value?.trim() ?? '';
 
 const toFormValues = (org: Organization): OrganizationFormValues => ({
   displayName: org.displayName,
@@ -103,6 +123,7 @@ type OrganizationFormModalProps = {
   serverError?: string;
   fieldErrors?: ApiFieldError[];
   organizationLoadError?: string;
+  onRetryLoadOrganization?: () => void;
   onSubmit: (values: OrganizationFormValues) => void;
   onClose: () => void;
 };
@@ -116,6 +137,7 @@ const OrganizationFormModal = ({
   serverError,
   fieldErrors,
   organizationLoadError,
+  onRetryLoadOrganization,
   onSubmit,
   onClose,
 }: OrganizationFormModalProps) => {
@@ -171,23 +193,10 @@ const OrganizationFormModal = ({
   const handleValidSubmit = (values: OrganizationFormValues) => {
     if (
       isEditMode &&
-      !Object.values({
-        displayName: values.displayName,
-        legalName: values.legalName,
-        domainUrl: values.domainUrl,
-        contactEmail: values.contactEmail,
-        contactPhone: values.contactPhone,
-        website: values.website,
-        registrationNumber: values.registrationNumber,
-        taxId: values.taxId,
-        country: values.country,
-        timezone: values.timezone,
-        addressLine1: values.addressLine1,
-        addressLine2: values.addressLine2,
-        city: values.city,
-        state: values.state,
-        postalCode: values.postalCode,
-      }).some((value) => value.trim().length > 0)
+      organization &&
+      !EDITABLE_FORM_FIELDS.some(
+        (field) => normalizeComparableValue(values[field]) !== normalizeComparableValue(toFormValues(organization)[field]),
+      )
     ) {
       setError('root', {
         type: 'manual',
@@ -278,14 +287,14 @@ const OrganizationFormModal = ({
 
         <Modal.Body style={{ maxHeight: '70vh', overflowY: 'auto' }}>
           {isEditMode && isLoadingOrganization ? (
-            <div className="d-flex align-items-center justify-content-center py-5 gap-2 text-muted">
-              <Spinner animation="border" size="sm" role="status" />
-              <span>{lang.superuser.organizations.details.loading}</span>
-            </div>
+            <InlineStateNotice status="loading" message={lang.superuser.organizations.details.loading} centered />
           ) : isEditMode && organizationLoadError && !organization ? (
-            <Alert variant="danger" className="mb-0">
-              {organizationLoadError}
-            </Alert>
+            <InlineStateNotice
+              status="error"
+              message={organizationLoadError}
+              actionLabel={onRetryLoadOrganization ? lang.superuser.organizations.details.retry : undefined}
+              onAction={onRetryLoadOrganization}
+            />
           ) : (
             <>
               {modalError && (

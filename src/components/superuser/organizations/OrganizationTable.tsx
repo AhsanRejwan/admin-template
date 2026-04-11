@@ -1,10 +1,8 @@
-import Alert from 'react-bootstrap/Alert';
-import Button from 'react-bootstrap/Button';
-import Spinner from 'react-bootstrap/Spinner';
 import Table from 'react-bootstrap/Table';
 
 import { lang } from '@constants/LanguageConstants';
 import type { OrganizationSummary } from '@models/organization/OrganizationSummary';
+import InlineStateNotice from '@ui/InlineStateNotice';
 
 import OrganizationActionsDropdown from './OrganizationActionsDropdown';
 
@@ -14,6 +12,7 @@ type OrganizationTableProps = {
   organizations: OrganizationSummary[];
   isLoading: boolean;
   isError: boolean;
+  errorMessage?: string;
   selectedId: number | null;
   onRowClick: (org: OrganizationSummary) => void;
   onEdit: (org: OrganizationSummary) => void;
@@ -25,6 +24,7 @@ const OrganizationTable = ({
   organizations,
   isLoading,
   isError,
+  errorMessage,
   selectedId,
   onRowClick,
   onEdit,
@@ -33,27 +33,24 @@ const OrganizationTable = ({
 }: OrganizationTableProps) => {
   if (isLoading) {
     return (
-      <div className="d-flex align-items-center gap-2 py-4 text-muted">
-        <Spinner animation="border" size="sm" role="status" />
-        <span>{l.loading}</span>
-      </div>
+      <InlineStateNotice status="loading" message={l.loading} />
     );
   }
 
   if (isError) {
     return (
-      <Alert variant="danger" className="d-flex align-items-center justify-content-between mb-0">
-        <span>{l.error}</span>
-        <Button variant="outline-danger" size="sm" onClick={onRetry}>
-          {l.retry}
-        </Button>
-      </Alert>
+      <InlineStateNotice
+        status="error"
+        message={errorMessage ?? l.error}
+        actionLabel={l.retry}
+        onAction={onRetry}
+      />
     );
   }
 
   if (organizations.length === 0) {
     return (
-      <p className="text-muted py-4 mb-0 text-center">{l.empty}</p>
+      <InlineStateNotice status="empty" message={l.empty} centered />
     );
   }
 
@@ -73,6 +70,7 @@ const OrganizationTable = ({
             key={org.id}
             className={`org-table-row${selectedId === org.id ? ' table-active' : ''}`}
             onClick={() => onRowClick(org)}
+            role="button"
             tabIndex={0}
             onKeyDown={(e) => {
               if (e.key === 'Enter' || e.key === ' ') {
