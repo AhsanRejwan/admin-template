@@ -9,12 +9,13 @@ This standard governs:
 - REST service and React Query conventions
 - query-key structure
 - forms, routing, aliases, and model organization
+- engineering principles and React coding conventions
 - the required build workflow for new features
 
 ## Core Rules
 
 1. Build product code under app-owned folders in `src/`. Do not keep growing `src/template` as a product surface.
-2. Check `src/UI` first before extracting anything from `src/template`.
+2. Check `src/ui` first before extracting anything from `src/template`.
 3. Pages stay thin. Containers own orchestration. Components own rendering.
 4. All server communication goes through Axios-backed REST services and React Query hooks.
 5. Every API endpoint gets its own hook.
@@ -26,12 +27,33 @@ This standard governs:
 11. Hooks are the only file-name exception and must use lowercase `use...` naming.
 12. New feature work must fit the folder structure below unless there is a strong repo-wide reason to evolve the standard.
 
+## Engineering Principles
+
+All app-owned feature work must follow these principles:
+
+- SOLID: keep modules narrowly scoped, depend on abstractions where it materially improves change safety, and avoid components or services with mixed responsibilities
+- DRY: centralize repeated endpoint paths, storage keys, mapping logic, and shared UI primitives, but do not create abstractions before duplication is real
+- KISS: prefer small components, predictable data flow, and direct code over clever indirection
+- YAGNI: do not add speculative hooks, providers, abstractions, or route layers before an active requirement exists
+- functional React only: app-owned React modules must stay function-based; do not introduce class-based components or lifecycle-driven state containers
+- arrow-function default: components, hooks, containers, layouts, contexts, and local React helpers should default to `const x = () => {}` declarations and use `function` only for a documented technical reason
+
+These principles apply to implementation and structure. When they conflict, prefer the simplest design that preserves correctness and future change safety.
+
+## Styling Rules
+
+All app-owned UI work in `src/` must follow these styling rules:
+
+1. Use Bootstrap utility classes wherever possible. Only create custom CSS when Bootstrap utilities do not cover the requirement.
+2. Avoid direct element sizing with `height` and `width` where possible. Prefer padding, margin, and content-driven sizing so UI stays more resilient and resizable. Keep explicit sizing only when it is structurally required, such as canvas nodes, overlays, or third-party layout integrations.
+3. Use flexbox for item organization in most cases. Reserve grid layouts for larger two-dimensional page or dashboard layouts where flex is a poor fit.
+
 ## Target Source Layout
 
 ```text
 src/
   assets/
-  UI/
+  ui/
   components/
     <feature>/
   containers/
@@ -93,7 +115,7 @@ Containers own orchestration for a page or a major slice of a page. A container 
 - call service hooks
 - read and update context
 - coordinate UI state, search, pagination, filters, sorting, and submission flow
-- compose feature components and `src/UI` primitives
+- compose feature components and `src/ui` primitives
 - keep transport details out of components
 
 Containers must be organized by major feature or module.
@@ -106,7 +128,7 @@ Components render reusable or feature-local UI. A component should:
 - stay focused on presentation and controlled interactions
 - avoid direct REST calls by default
 - live in feature subfolders when feature-specific
-- move to `src/UI` only when it becomes broadly reusable across features
+- move to `src/ui` only when it becomes broadly reusable across features
 
 Components must be organized by major feature or module.
 
@@ -188,20 +210,20 @@ Standard pattern:
 
 ```ts
 export const dashboardQueryKeys = {
-    all: () => ['dashboards'],
-    list: () => [...dashboardQueryKeys.all(), 'list'],
-    pagedList: (term: string, pageNumber = 0, pageSize = 20, sort?: SortOrder) => [
-        ...dashboardQueryKeys.list(),
-        term,
-        {pageNumber, pageSize, sort},
-    ],
-    infinitePagedList: (term = '') => [
-        ...dashboardQueryKeys.list(),
-        term,
-        'infinite',
-    ],
-    details: () => [...dashboardQueryKeys.all(), 'details'],
-    detailsById: (id: number) => [...dashboardQueryKeys.details(), id],
+  all: () => ['dashboards'],
+  list: () => [...dashboardQueryKeys.all(), 'list'],
+  pagedList: (term: string, pageNumber = 0, pageSize = 20, sort?: SortOrder) => [
+    ...dashboardQueryKeys.list(),
+    term,
+    {pageNumber, pageSize, sort},
+  ],
+  infinitePagedList: (term = '') => [
+    ...dashboardQueryKeys.list(),
+    term,
+    'infinite',
+  ],
+  details: () => [...dashboardQueryKeys.all(), 'details'],
+  detailsById: (id: number) => [...dashboardQueryKeys.details(), id],
 };
 ```
 
@@ -248,6 +270,18 @@ This folder is the single source of truth for React Query cache addressing.
 
 Do not put environment-specific logic or derived state here.
 
+Language constant rules:
+
+- all user-facing display copy must come from `src/constants/LanguageConstants.ts`
+- export a module-scoped `lang` object so references stay stable across renders
+- before adding any new display string, check the existing `lang` hierarchy and reuse an existing value when the meaning already matches
+- if the current `lang` indexing no longer fits the feature cleanly, propose and apply a hierarchy adjustment rather than forcing an inaccurate key path
+- structure language keys by surface and usage, for example `lang.layout.sidebar.items.home` or `lang.superuser.auth.loginForm.actions.submit`
+- if no suitable key exists after that review, add a new nested index in the existing hierarchy instead of introducing an inline string
+- include validation copy, empty states, CTA labels, headings, placeholder text, aria labels, alt text, toast text, and server-error display text in that shared hierarchy
+- do not hardcode display strings inside pages, containers, components, layouts, or contexts
+- if future multi-locale support is required, keep the same key hierarchy and swap locale modules behind the same contract rather than reintroducing inline strings
+
 ### `services/`
 
 `services/` is the raw API layer. It is responsible for:
@@ -270,19 +304,20 @@ Required service structure:
 `ServiceLinks.ts` rules:
 
 - store relative endpoint paths, not full URLs
-- group links by resource or module
+- keep the object readable and shallow by default
 - keep dynamic segments in small functions
 - do not duplicate URI strings inside service files
+- do not force links into CRUD-shaped naming if that makes the code less readable
+- prefer self-contained endpoint names that make sense on their own, such as plural collection names and singular resource names
+- introduce nested objects only when they materially improve clarity; do not nest by default just to mirror modules or REST verbs
 
 Example:
 
 ```ts
 export const serviceLinks = {
-    dashboards: {
-        list: () => '/dashboards',
-        details: (id: number) => `/dashboards/${id}`,
-        favorite: (id: number) => `/dashboards/${id}/favorite`,
-    },
+  dashboards: () => '/dashboards',
+  dashboard: (id: number) => `/dashboards/${id}`,
+  dashboardFavorite: (id: number) => `/dashboards/${id}/favorite`,
 };
 ```
 
@@ -340,6 +375,16 @@ Recommended split:
 - `hooks/service/<feature>/` wraps those functions with React Query
 - `hooks/service/query-key/` provides cache key factories
 
+## Icon Standard
+
+All app-owned icons must use `react-icons` with the Ant Design icon set (`react-icons/ai`). Rules:
+
+- import icons from `react-icons/ai` only; do not use other icon families unless a future decision is recorded here
+- do not use template icon-font classes such as `ti ti-*` in new app-owned code
+- icon components are React components, not font glyphs, so they scale with `size` and inherit `color` or `className` like any inline element
+- use `aria-label` or `aria-hidden` on icon-only buttons for accessibility
+- if a reusable icon wrapper is needed, place it in `src/ui`
+
 ## Form Standard
 
 All forms must use React Hook Form for state management and submission.
@@ -368,7 +413,7 @@ Required aliases:
 - `@constants/*`
 - `@models/*`
 - `@service/*` mapped to `src/services/*`
-- `@ui/*` mapped to `src/UI/*`
+- `@ui/*` mapped to `src/ui/*`
 - `@assets/*`
 - `@routes/*`
 
@@ -396,23 +441,52 @@ import {ROUTES} from '@constants/Routes';
 
 Use PascalCase for components, containers, pages, services, contexts, constants, and model files. Use camelCase for hooks and exported query-key objects.
 
+## React Component And Function Standard
+
+All app-owned React code must use function components. Do not introduce class-based React components.
+
+Required conventions:
+
+- components, pages, containers, layouts, contexts, and hooks should use arrow-function declarations such as `const DashboardPage = () => {}`
+- prefer arrow functions for local helpers in React modules to keep style consistent
+- use `function` declarations only when there is a clear technical reason, such as a library contract or a hoisting requirement that materially simplifies the code
+- class-based React components are prohibited in app-owned code
+- keep React modules declarative and avoid mixing rendering, transport, and persistence responsibilities
+- extracted app-owned React modules must not keep importing template-owned stylesheets, icon-font bundles, or other donor-only presentation assets
+- CSS must use relative units (`rem` for dimensions, spacing, and typography; `em` for media query breakpoints) unless a pixel value is technically required — for example, `1px` borders or `box-shadow` offsets where sub-pixel rendering demands it; z-index values remain unitless integers
+
+`src/template` is a donor area, not the architectural reference for new product code. Validate extracted code against this standard when it moves into app-owned folders.
+
+## Validation Checklist
+
+Every feature review and completion pass must validate the following:
+
+- `npm run lint`
+- `npm run typecheck`
+- `npm run build`
+- no app-owned React module introduces a class-based component
+- no app-owned React module uses `function` declarations for components, hooks, containers, layouts, or contexts unless the exception is clearly justified in code review
+- no app-owned React module contains hardcoded display strings; user-facing copy must resolve through `lang`
+- the final structure still satisfies SOLID, DRY, KISS, and YAGNI rather than adding speculative abstractions
+
 ## Template Extraction Rule
 
 This repo still contains a donor template under `src/template`. Feature work must follow the existing extraction workflow:
 
-1. Check `src/UI` first.
+1. Check `src/ui` first.
 2. If the UI already exists there, reuse or extend it.
-3. Only if it does not exist in `src/UI`, inspect `src/template` and [`docs/template-ui-library-index.md`](./template-ui-library-index.md).
+3. Only if it does not exist in `src/ui`, inspect `src/template` and [`docs/template-ui-library-index.md`](./template-ui-library-index.md).
 4. Extract the minimum needed code into app-owned folders.
-5. Remove demo wiring, sample data, and template-only dependencies immediately.
-6. Do not leave new product code coupled to `src/template`.
+5. Port the required styles, icons, and supporting assets into app-owned files as part of the same change.
+6. Remove demo wiring, sample data, and template-only dependencies immediately.
+7. Do not leave new product code coupled to `src/template`.
 
 ## Agentic Feature Delivery Workflow
 
 When an agent builds a new feature, the expected order is:
 
 1. Read `README.md`, this document, and the template UI index.
-2. Confirm whether `src/UI` already has the needed reusable building blocks.
+2. Confirm whether `src/ui` already has the needed reusable building blocks.
 3. Define or extend route constants and the top-level router.
 4. Add or update typed models under `src/models/<feature>`.
 5. Add or update URI mappings in `src/services/ServiceLinks.ts`.
@@ -420,10 +494,11 @@ When an agent builds a new feature, the expected order is:
 7. Create query-key factories in `src/hooks/service/query-key`.
 8. Create one React Query hook per API endpoint in `src/hooks/service/<feature>`.
 9. Build the container logic in `src/containers/<feature>`.
-10. Build or extract feature components in `src/components/<feature>` or `src/UI`.
+10. Build or extract feature components in `src/components/<feature>` or `src/ui`.
 11. Add the thin page entry in `src/pages/<feature>`.
 12. Use aliases everywhere.
-13. Keep direct imports from `src/template` out of final feature code unless the task is explicitly mid-extraction.
+13. Port any required styling and presentation assets into app-owned files before calling the feature done.
+14. Keep direct imports from `src/template` out of final feature code unless the task is explicitly mid-extraction.
 
 ## Definition Of Done For New Features
 
@@ -431,7 +506,7 @@ A feature is not complete unless it satisfies all of the following:
 
 - page exists under `pages/`
 - orchestration lives in `containers/`
-- UI lives in `components/` or `src/UI`
+- UI lives in `components/` or `src/ui`
 - API access is implemented through Axios-backed React Query hooks
 - query keys exist in `hooks/service/query-key`
 - HTTP URI mappings exist in `services/ServiceLinks.ts`
@@ -439,4 +514,7 @@ A feature is not complete unless it satisfies all of the following:
 - route paths are defined centrally
 - imports use aliases
 - file names follow the naming convention in this document
+- app-owned React modules use arrow-function declarations unless a clear technical exception exists
+- user-facing copy is sourced from `src/constants/LanguageConstants.ts` rather than inline string literals
+- extracted styling and presentation assets are app-owned, not still imported from `src/template`
 - no new product dependency is introduced on `src/template`
