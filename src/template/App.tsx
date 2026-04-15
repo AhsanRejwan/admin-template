@@ -1,11 +1,23 @@
+import { useRef } from 'react';
 import { RouterProvider } from 'react-router-dom';
 
-// project-imports
-import router from 'template/routes';
+import './index.scss';
 
-// ==============================|| APP - THEME, ROUTER, LOCAL ||============================== //
+import { createTemplateRouter } from 'template/routes';
 
-function App() {
+type TemplateAppProps = {
+  basename?: string;
+};
+
+function App({ basename = import.meta.env.VITE_APP_BASE_NAME }: TemplateAppProps) {
+  const routerRef = useRef<ReturnType<typeof createTemplateRouter> | null>(null);
+
+  if (!routerRef.current) {
+    routerRef.current = createTemplateRouter(basename);
+  }
+
+  const router = routerRef.current;
+
   return <RouterProvider router={router} />;
 }
 
